@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="en">
+<html class="theme-next pisces use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Blog, Deep learning" />
 
 
 
@@ -106,7 +106,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
@@ -206,6 +206,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -222,6 +242,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
           </a>
         </li>
       
@@ -254,7 +284,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/C++_interview_questions1/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/DP_Distinct_Subsequence/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JustKitt">
@@ -273,7 +303,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/21/C++_interview_questions1/" itemprop="url">C++面试常见问题（一）</a></h1>
+                <a class="post-title-link" href="/2017/05/21/DP_Distinct_Subsequence/" itemprop="url">动态规划:不同子序列（Distinct Subsequences）</a></h1>
         
 
         <div class="post-meta">
@@ -308,8 +338,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
+                  <a href="/categories/动态规划/" itemprop="url" rel="index">
+                    <span itemprop="name">动态规划</span>
                   </a>
                 </span>
 
@@ -343,11 +373,14 @@
 
       
         
-          <p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
-<h2 id="1-多态性都有哪些？"><a href="#1-多态性都有哪些？" class="headerlink" title="1. 多态性都有哪些？"></a>1. 多态性都有哪些？</h2><p>重写分为两种情况，子类重写父类的虚函数，子类重写父类的非虚函数。前一种情况被称为多态。多态属于函数地址晚绑定（运行时绑定）的情况，而后一种属于静态的，地址是早绑定的，在编译器编译期间就会确定函数的地址被称为覆盖。<br>
+          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>有两个字符串s和t，找出s的所有不同的子序列，这些子序列是t。例如对于s=”rabbbit”,t = “rabbit”，那么s中去掉三个b的随便一个都可以构成t，所以s的所有不同的子序列是t的个数是3。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/C++_interview_questions1/#more" rel="contents">
+            <a class="btn" href="/2017/05/21/DP_Distinct_Subsequence/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -629,6 +662,145 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/05/21/DP_BP/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/C++_interview_questions1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JustKitt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JustKitt's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/21/C++_interview_questions1/" itemprop="url">C++面试常见问题（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T15:07:12+08:00">
+                2017-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
+<h2 id="1-多态性都有哪些？"><a href="#1-多态性都有哪些？" class="headerlink" title="1. 多态性都有哪些？"></a>1. 多态性都有哪些？</h2><p>重写分为两种情况，子类重写父类的虚函数，子类重写父类的非虚函数。前一种情况被称为多态。多态属于函数地址晚绑定（运行时绑定）的情况，而后一种属于静态的，地址是早绑定的，在编译器编译期间就会确定函数的地址被称为覆盖。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/21/C++_interview_questions1/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1100,7 +1272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/DP_Distinct_Subsequence/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/LCS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JustKitt">
@@ -1119,7 +1291,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/21/DP_Distinct_Subsequence/" itemprop="url">动态规划:不同子序列（Distinct Subsequences）</a></h1>
+                <a class="post-title-link" href="/2017/05/21/LCS/" itemprop="url">动态规划:最长公共子序列</a></h1>
         
 
         <div class="post-meta">
@@ -1193,10 +1365,10 @@
 </script>
 
 <p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>有两个字符串s和t，找出s的所有不同的子序列，这些子序列是t。例如对于s=”rabbbit”,t = “rabbit”，那么s中去掉三个b的随便一个都可以构成t，所以s的所有不同的子序列是t的个数是3。<br>
+<h2 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h2><p>有两个序列，分别是s1 = {a,b,c,b,d,a,b},s2 = {b,d,c,a,b,a}，从前往后找，s1和s2的最长公共子序列为LCS(s1,s2) = {b,c,b,a}，求s1和s2的最长公共子序列长度。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/DP_Distinct_Subsequence/#more" rel="contents">
+            <a class="btn" href="/2017/05/21/LCS/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1372,148 +1544,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/LCS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JustKitt">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JustKitt's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/21/LCS/" itemprop="url">动态规划:最长公共子序列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T15:07:12+08:00">
-                2017-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/动态规划/" itemprop="url" rel="index">
-                    <span itemprop="name">动态规划</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
-<h2 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h2><p>有两个序列，分别是s1 = {a,b,c,b,d,a,b},s2 = {b,d,c,a,b,a}，从前往后找，s1和s2的最长公共子序列为LCS(s1,s2) = {b,c,b,a}，求s1和s2的最长公共子序列长度。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/21/LCS/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1638,7 +1668,7 @@
 <div class="theme-info">
   Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Pisces
   </a>
 </div>
 
@@ -1717,6 +1747,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
 
   
 
