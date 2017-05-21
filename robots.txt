@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /about/
+Allow: /tags/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+
+Sitemap: http://blog.justkitt.com/sitemap.xml
+Sitemap: http://blog.justkitt.com/baidusitemap.xml

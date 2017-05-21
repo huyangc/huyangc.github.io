@@ -1,0 +1,726 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,动态规划," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="转载请注明出处：blog.justkitt.com 问题定义背包问题可以被描述为决定性问题，即在总重量不超过\(W\)的前提下，总价值是否能达到\(V\)。共有\(n\)种物品，物品\(i\)的重量是\(w_i\)，价格是\(v_i\)。假设所有物品的重量和价格都是非负的，背包所能承受的最大重量为\(W\)。">
+<meta name="keywords" content="算法,动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划:背包问题">
+<meta property="og:url" content="http://blog.justkitt.com/2017/05/21/DP_BP/index.html">
+<meta property="og:site_name" content="JustKitt&#39;s blog">
+<meta property="og:description" content="转载请注明出处：blog.justkitt.com 问题定义背包问题可以被描述为决定性问题，即在总重量不超过\(W\)的前提下，总价值是否能达到\(V\)。共有\(n\)种物品，物品\(i\)的重量是\(w_i\)，价格是\(v_i\)。假设所有物品的重量和价格都是非负的，背包所能承受的最大重量为\(W\)。">
+<meta property="og:updated_time" content="2017-05-21T07:07:12.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划:背包问题">
+<meta name="twitter:description" content="转载请注明出处：blog.justkitt.com 问题定义背包问题可以被描述为决定性问题，即在总重量不超过\(W\)的前提下，总价值是否能达到\(V\)。共有\(n\)种物品，物品\(i\)的重量是\(w_i\)，价格是\(v_i\)。假设所有物品的重量和价格都是非负的，背包所能承受的最大重量为\(W\)。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justkitt.com/2017/05/21/DP_BP/"/>
+
+
+
+
+
+  <title>动态规划:背包问题 | JustKitt's blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JustKitt's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/DP_BP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JustKitt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JustKitt's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">动态规划:背包问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T15:07:12+08:00">
+                2017-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/动态规划/" itemprop="url" rel="index">
+                    <span itemprop="name">动态规划</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
+<h1 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h1><p>背包问题可以被描述为决定性问题，即在总重量不超过\(W\)的前提下，总价值是否能达到\(V\)。<br>共有\(n\)种物品，物品\(i\)的重量是\(w_i\)，价格是\(v_i\)。假设所有物品的重量和价格都是非负的，背包所能承受的最大重量为\(W\)。<br><a id="more"></a><br>具体根据物品可以选取的次数，又可以将问题分为以下三类</p>
+<h2 id="0-1背包问题"><a href="#0-1背包问题" class="headerlink" title="0-1背包问题"></a>0-1背包问题</h2><p>即每个物品只能选取0个或者1个，可以将问题用下述公式表示<br>最大化\(\sum_{i=1}^n p_ix_i\)</p>
+<p>受限于\(\sum_{i=1}^n w_ix_i \leq W ,  x_i \in [0,1]\)</p>
+<h2 id="有界背包问题"><a href="#有界背包问题" class="headerlink" title="有界背包问题"></a>有界背包问题</h2><p>限定物品\(i\)最多只能有\(b_i\)个，则问题成为有界背包问题。可以用下述公式表达：</p>
+<p>最大化 \(\sum_{i=1}^n p_ix_i\)</p>
+<p>受限于\(\sum_{i=1}^n w_ix_i \leq W ,  x_i \in [0,b_j]\)</p>
+<h2 id="无界背包（完全背包）问题"><a href="#无界背包（完全背包）问题" class="headerlink" title="无界背包（完全背包）问题"></a>无界背包（完全背包）问题</h2><p>不限定每种物品的数量，则称为无界背包（完全背包）问题。</p>
+<h1 id="问题转换"><a href="#问题转换" class="headerlink" title="问题转换"></a>问题转换</h1><p>各类背包问题都可以转换为简单的0-1背包问题来解决。</p>
+<h2 id="0-1背包问题解决方法"><a href="#0-1背包问题解决方法" class="headerlink" title="0-1背包问题解决方法"></a>0-1背包问题解决方法</h2><p>我们假设第i件物品的重量是w[i]，价值是p[i]，背包总共能够容纳的容量是W。<br>那么我们设置状态转移变量为dp[i][w]表示的是前i件物品恰好是w那么重能够获得的最大的价值。<br>所以状态转移方程为：<br>$$<br>dp[i][w] = max(dp[i-1][w],dp[i-1][w-w[i]]+p[i])<br>$$<br>这个状态转移方程的意义可以有两个，首先我们判断的是第i件物品到底放不放，如果第i件不放入背包，那么当前就是前i-1件商品在w重量的情况下的价值，如果第i件商品放入背包，那么就是前i-1件商品放入背包并且要空出w[i]这么多重量给当前物品，然后用之前的状态加上p[i]就是放入第i件物品之后背包里的价值。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>经过以上的分析之后，可以得出以下的0-1背包问题的最不优化的情况的代码<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxValue</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; w,<span class="keyword">int</span> maxweight, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; p)</span></span>&#123;</div><div class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(w.size()+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(maxweight+<span class="number">1</span>,<span class="number">0</span>));</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=w.size();++i)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;=maxweight;++j)&#123;</div><div class="line">			<span class="keyword">if</span>(j&lt;w[i<span class="number">-1</span>])</div><div class="line">				dp[i][j] = dp[i<span class="number">-1</span>][j];</div><div class="line">			<span class="keyword">else</span></div><div class="line">				dp[i][j] = max(dp[i<span class="number">-1</span>][j],dp[i<span class="number">-1</span>][j-w[i<span class="number">-1</span>]]+p[i<span class="number">-1</span>]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[w.size()][maxweight];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>以上代码的空间复杂度是O(WN)，这个空间复杂度是可以进行优化的，时间复杂度应该已经无法优化了。可以通过逆序第二个循环来达到优化空间复杂度的目的，即<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxValue</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; w,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; p,<span class="keyword">int</span> maxWeight)</span></span>&#123;</div><div class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp(maxWeight+<span class="number">1</span>,<span class="number">0</span>);</div><div class="line">	<span class="keyword">int</span> nums = w.size();</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=nums;++i)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = maxWeight;j&gt;=w[i<span class="number">-1</span>];--j)&#123;</div><div class="line">			dp[j] = max(dp[j],dp[j-w[i<span class="number">-1</span>]]+p[i<span class="number">-1</span>]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[maxWeight];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>经过逆序之后，可以把空间复杂度变成O(W)。</p>
+<p>… To Be Continued</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/动态规划/" rel="tag"># 动态规划</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/DP_LISeseq/" rel="next" title="动态规划:最长递增子序列">
+                <i class="fa fa-chevron-left"></i> 动态规划:最长递增子序列
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/21/C++_interview_questions2/" rel="prev" title="C++面试常见问题（二）">
+                C++面试常见问题（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JustKitt" />
+          <p class="site-author-name" itemprop="name">JustKitt</p>
+           
+              <p class="site-description motion-element" itemprop="description">JustKitt的个人博客，记录问题解决方法的地方</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题定义"><span class="nav-number">1.</span> <span class="nav-text">问题定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-1背包问题"><span class="nav-number">1.1.</span> <span class="nav-text">0-1背包问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有界背包问题"><span class="nav-number">1.2.</span> <span class="nav-text">有界背包问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无界背包（完全背包）问题"><span class="nav-number">1.3.</span> <span class="nav-text">无界背包（完全背包）问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题转换"><span class="nav-number">2.</span> <span class="nav-text">问题转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-1背包问题解决方法"><span class="nav-number">2.1.</span> <span class="nav-text">0-1背包问题解决方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.2.1.</span> <span class="nav-text">优化</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JustKitt</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

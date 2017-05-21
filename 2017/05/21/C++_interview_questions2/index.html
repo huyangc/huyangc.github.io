@@ -1,0 +1,875 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="转载请注明出处：blog.justkitt.com 20. STL有哪些容器，对比vector和set序列式容器序列式容器一般是指那些存储形式表象是连续的，不间断的形式，这种形式的存储容器被称为序列式容器。">
+<meta name="keywords" content="C++,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++面试常见问题（二）">
+<meta property="og:url" content="http://blog.justkitt.com/2017/05/21/C++_interview_questions2/index.html">
+<meta property="og:site_name" content="JustKitt&#39;s blog">
+<meta property="og:description" content="转载请注明出处：blog.justkitt.com 20. STL有哪些容器，对比vector和set序列式容器序列式容器一般是指那些存储形式表象是连续的，不间断的形式，这种形式的存储容器被称为序列式容器。">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20160803185858.jpg">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%911.jpg">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%912.jpg">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%913.jpg">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%914.jpg">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB.jpg">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/%E5%90%84%E5%AE%B9%E5%99%A8%E6%AF%94%E8%BE%83.jpg">
+<meta property="og:updated_time" content="2017-05-21T07:07:12.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++面试常见问题（二）">
+<meta name="twitter:description" content="转载请注明出处：blog.justkitt.com 20. STL有哪些容器，对比vector和set序列式容器序列式容器一般是指那些存储形式表象是连续的，不间断的形式，这种形式的存储容器被称为序列式容器。">
+<meta name="twitter:image" content="http://obbyqbbco.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20160803185858.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justkitt.com/2017/05/21/C++_interview_questions2/"/>
+
+
+
+
+
+  <title>C++面试常见问题（二） | JustKitt's blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JustKitt's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/C++_interview_questions2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JustKitt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JustKitt's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++面试常见问题（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T15:07:12+08:00">
+                2017-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
+<h2 id="20-STL有哪些容器，对比vector和set"><a href="#20-STL有哪些容器，对比vector和set" class="headerlink" title="20. STL有哪些容器，对比vector和set"></a>20. STL有哪些容器，对比vector和set</h2><h3 id="序列式容器"><a href="#序列式容器" class="headerlink" title="序列式容器"></a>序列式容器</h3><p>序列式容器一般是指那些存储形式表象是连续的，不间断的形式，这种形式的存储容器被称为序列式容器。<br><a id="more"></a></p>
+<h4 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h4><p>vector的底层实现是数组，vector存储的是参数的一份拷贝，所以对于存放非指针来说，在存入vector之后，会被拷贝一份存入vector中。vector支持随机存取，就是说可以用下标的形式存储。同时vector的底层扩充机制是每次申请上次内存空间两倍的空间，然后将之前的内容拷贝到新的内存块中，然后消除原先的内存块。对于vector来说，一般使用push_back进行存放，从尾部加元素比其他位置加元素的效率要高，从中部加元素需要把之后的元素全部向后挪。</p>
+<h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><p>C++中的list是一个双向链表，每个节点都有指向其前一个节点的指针和后一个节点的指针，所以对于list来说，不支持随机存取，即[i]这种形式的存取是不被允许的。但是list对于插入这种情况的支持是非常友好的，因为只要改变一下指针指向的位置就可以了。</p>
+<h4 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h4><p>vector是单向开口的连续线性空间，deque是双向开口的连续线性空间。具体的区别在于deque允许在头部进行元素的插入或移除操作，deque有<strong>缓冲区</strong>和<strong>中控器</strong>。中控器控制缓冲区的个数，缓冲区实际存放数据。具体的deque介绍可以看<a href="http://ibillxia.github.io/blog/2014/07/13/stl-source-insight-3-sequential-containers-3-deque-and-stack-queue/" target="_blank" rel="external">这里</a>，有关deque的图可以看<a href="http://www.programlife.net/stl-deque.html" target="_blank" rel="external">这里</a>。</p>
+<h3 id="关联式容器"><a href="#关联式容器" class="headerlink" title="关联式容器"></a>关联式容器</h3><p>关联式容器有两种形式，一种底层是以树来进行实现的，在C++中没有unordered，一种底层是以hash函数来实现的，用unordered_开头。</p>
+<h4 id="set和map"><a href="#set和map" class="headerlink" title="set和map"></a>set和map</h4><p>底层用红黑树来实现，里面的数据是有序的，如果用迭代器的方式进行取出，则会得到有序的结果。map其实是set的一种特殊情况，感觉set在每个节点上存入一个pair，就可以构造出map的形式。（对key进行排序），这时候需要key的类型需要有实现比较函数<code>&lt;</code>，<code>=</code>。</p>
+<h4 id="unordered-set和unordered-map"><a href="#unordered-set和unordered-map" class="headerlink" title="unordered_set和unordered_map"></a>unordered_set和unordered_map</h4><p>这两个函数底层用hash函数+桶的方式来实现，桶后面接上链表的方式，这种hash的方式称为<strong>开链法</strong>，这里面还需要理解的还有<strong><a href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%8E%A2%E6%B5%8B" target="_blank" rel="external">线性探测</a></strong>，<strong><a href="https://en.wikipedia.org/wiki/Quadratic_probing" target="_blank" rel="external">二次探测</a></strong>。这些都是解决哈希冲突的方法。</p>
+<h2 id="21-红黑树的定义和解释"><a href="#21-红黑树的定义和解释" class="headerlink" title="21. 红黑树的定义和解释"></a>21. 红黑树的定义和解释</h2><p>红黑树是一种自平衡二叉树，对插入时间、删除时间和查询时间提供了最好可能的最坏情况担保。对于二叉查找树来说，有可能树是不平衡的，偏向一边的，这样在极端情况下，查询和插入的时间复杂度可能达到O(n^2)，这时候就需要一种情况让树平衡。红黑树通过以下性质来保证树的形状在大体上是平衡的：</p>
+<ul>
+<li>树的每个节点是红色或者黑色的</li>
+<li>根节点是黑色的</li>
+<li>所有叶子节点都是黑色的（叶子节点是NIL节点）</li>
+<li>从根到叶子节点的路径上不能存在两个连续的红色节点</li>
+<li>从任一节点到其每个叶子节点的所有简单路径都有相同数量的黑色节点。</li>
+</ul>
+<p>所以红黑树的<strong>插入、删除、查找时间复杂度都是O(log n)</strong></p>
+<p>红黑树的典型情况如下图<img src="http://obbyqbbco.bkt.clouddn.com/QQ%E6%88%AA%E5%9B%BE20160803185858.jpg" alt="红黑树"><br>红黑树的默认插入直接遍历整棵树，根据插入的节点的值找到相应的位置，将节点颜色变成红色（因为要满足从一个根节点到其所有叶子节点的路径上的黑色节点数量都相同），然后根据不能有连续相同的红色进行相应的调整。</p>
+<blockquote>
+<p>新节点为X，父节点为P，祖父节点为G，伯父节点为S，曾祖父节点为GG。根据X的插入位置及外围节点（S和GG）的颜色，有以下四种考虑。<br>以下图片全部引用自《STL源码剖析》</p>
+</blockquote>
+<ul>
+<li>S为黑色X在外侧插入。对此情况，对P、G做一次单旋转，并更改P，G颜色，即可重新满足红黑树的条件了<br><img src="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%911.jpg" alt="情况1"></li>
+<li>S为黑切X为内侧插入，首先对P、X做一次单旋转，并且更改G、X的颜色，然后在对G做一次单旋转即可。（先左旋，再右旋）<br><img src="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%912.jpg" alt="情况2"></li>
+<li>S为红且X为外侧插入。先对P、G做一次单旋转，并改变X的颜色。如果GG为黑色，则满足情况，否则再对GG做调整。<br><img src="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%913.jpg" alt="情况3"></li>
+<li>这种情况就对应于情况3中GG是红色的情况，需要不断往上调整。<br><img src="http://obbyqbbco.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%914.jpg" alt="情况4"></li>
+</ul>
+<h2 id="22-const关键字的作用"><a href="#22-const关键字的作用" class="headerlink" title="22. const关键字的作用"></a>22. const关键字的作用</h2><p>这个在第7点中又给出</p>
+<h2 id="23-静态成员函数和数据成员有什么意义？"><a href="#23-静态成员函数和数据成员有什么意义？" class="headerlink" title="23. 静态成员函数和数据成员有什么意义？"></a>23. 静态成员函数和数据成员有什么意义？</h2><p>静态成员函数表示的是这个类的全体实例所具有的通用的方法，静态数据成员表示的是这个类所有实例所共有的数据。</p>
+<h2 id="24-什么是模板特化？为什么要模板特化？"><a href="#24-什么是模板特化？为什么要模板特化？" class="headerlink" title="24. 什么是模板特化？为什么要模板特化？"></a>24. 什么是模板特化？为什么要模板特化？</h2><p>首先模板具有两种类型：<strong>函数模板</strong>和<strong>类模板</strong>，类模板可以有全特化和偏特化，而函数模板只有全特化。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt;    <span class="comment">//模板</span></div><div class="line"><span class="keyword">class</span> Test</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Test(T1 i,T2 j):a(i),b(j)&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">"模板类"</span>&lt;&lt;<span class="built_in">endl</span>;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	T1 a;</div><div class="line">	T2 b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="keyword">class</span> Test&lt;<span class="keyword">int</span> , <span class="keyword">char</span>&gt;    <span class="comment">//全特化</span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Test(<span class="keyword">int</span> i, <span class="keyword">char</span> j):a(i),b(j)&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">"全特化"</span>&lt;&lt;<span class="built_in">endl</span>;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> a;</div><div class="line">	<span class="keyword">char</span> b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T2&gt;</div><div class="line"><span class="keyword">class</span> Test&lt;<span class="keyword">char</span>, T2&gt;		<span class="comment">//偏特化</span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Test(<span class="keyword">char</span> i, T2 j):a(i),b(j)&#123;<span class="built_in">cout</span>&lt;&lt;<span class="string">"偏特化"</span>&lt;&lt;<span class="built_in">endl</span>;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">char</span> a;</div><div class="line">	T2 b;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>函数模板只有全特化，代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//模板函数  </span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt;  </div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(T1 a , T2 b)</span>  </span></div><div class="line">&#123;  </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"模板函数"</span>&lt;&lt;<span class="built_in">endl</span>;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line"><span class="comment">//全特化  </span></div><div class="line"><span class="keyword">template</span>&lt;&gt;  </div><div class="line"><span class="keyword">void</span> fun&lt;<span class="keyword">int</span> ,<span class="keyword">char</span> &gt;(<span class="keyword">int</span> a, <span class="keyword">char</span> b)  </div><div class="line">&#123;  </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"全特化"</span>&lt;&lt;<span class="built_in">endl</span>;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line"><span class="comment">//函数不存在偏特化：下面的代码是错误的  </span></div><div class="line"><span class="comment">/* </span></div><div class="line">template&lt;typename T2&gt; </div><div class="line">void fun&lt;char,T2&gt;(char a, T2 b) </div><div class="line">&#123; </div><div class="line">    cout&lt;&lt;"偏特化"&lt;&lt;endl; </div><div class="line">&#125; </div><div class="line">*/</div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上代码来自<a href="http://blog.csdn.net/thefutureisour/article/details/7964682" target="_blank" rel="external">这里</a></p>
+</blockquote>
+<p>为什么要模板偏特化：<br>偏特化的版本可以针对具体的类型做出更加友好的动作，更加具有针对性。（对模板元编程仍然不是很熟悉，可能做出的解释不是很准确，这里需要进一步考证，同时也希望有人能回答这个问题…）</p>
+<h2 id="25-explicit是干什么用的？"><a href="#25-explicit是干什么用的？" class="headerlink" title="25. explicit是干什么用的？"></a>25. explicit是干什么用的？</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	A()&#123;&#125;</div><div class="line">	A(<span class="keyword">int</span>)&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于以上类声明，如果有语句A = 1，那么这句话是对的，它会调用A(int)这个构造函数来生成一个A的实例，这个叫做“隐式转换”，在相应构造函数的声明后加上explicit关键词之后，就可以避免这种“隐式转换”的发生。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	A()&#123;&#125;</div><div class="line">	<span class="function"><span class="keyword">explicit</span> <span class="title">A</span><span class="params">(<span class="keyword">int</span>)</span> </span>&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">A a = <span class="number">1</span>; <span class="comment">//这句话是错的</span></div><div class="line"><span class="function">A <span class="title">a</span><span class="params">(<span class="number">1</span>)</span>   <span class="comment">//这句话是对的</span></span></div></pre></td></tr></table></figure></p>
+<p>在很多地方都推荐将这种构造函数加上<code>explicit</code>关键词。</p>
+<h2 id="26-strcpy返回类型是干嘛用的"><a href="#26-strcpy返回类型是干嘛用的" class="headerlink" title="26. strcpy返回类型是干嘛用的"></a>26. strcpy返回类型是干嘛用的</h2><p>返回值是char*的考虑是为直接可以将返回值作为另一个函数的参数传入，可以用于函数链式使用。</p>
+<h2 id="27-内存溢出有那些因素？"><a href="#27-内存溢出有那些因素？" class="headerlink" title="27. 内存溢出有那些因素？"></a>27. 内存溢出有那些因素？</h2><p>首先是几个概念：</p>
+<h3 id="内存泄露"><a href="#内存泄露" class="headerlink" title="内存泄露"></a>内存泄露</h3><p>内存泄露是指由于疏忽或错误造成的程序未能释放已经不再使用的内存的情况。本质上来说，就是new了一个对象，但是没有用delete去删除它。<br>常见的内存泄露发生的情况：</p>
+<h3 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h3><p>内存溢出是指需要分配的内存超过了系统所能给予的，就产生了内存的溢出问题。有两种内存溢出的情况：</p>
+<ol>
+<li>堆内存溢出<br>直接malloc超级大的一块内存，超过系统内容。</li>
+<li>栈内存溢出<br>典型的有stackoverflow，就是递归层数较多，产生了无限递归这种情况。</li>
+</ol>
+<p>栈满了的时候push一个就会产生溢出，叫做上溢，栈空的时候pop，叫做下溢。<br>缓冲区溢出是一种特殊的内存溢出（广义），导致缓冲区溢出的原因就在于不检查数组容量和下标。缓冲区溢出攻击是利用函数调用过程中的进出栈原理，在调用函数的时候，就把函数返回地址写入到一个栈上，然后新函数的局部变量写入到了这块内存所在的栈中，因为栈是自下而上增长的，所以不断写就会覆盖掉函数返回地址所在的那块内存，然后当函数返回的时候，就会执行到那块内存中指向的位置的代码，在该指向位置插入自己所想被执行的代码就可以完成缓冲区溢出攻击。</p>
+<h2 id="28-new与malloc的区别，delet和free的区别"><a href="#28-new与malloc的区别，delet和free的区别" class="headerlink" title="28. new与malloc的区别，delet和free的区别"></a>28. new与malloc的区别，delet和free的区别</h2><ul>
+<li>new是一个操作符，可以被每个类重写。</li>
+<li>new底层可以首先调用malloc申请一块适合的内存空间，然后使用该类型的构造函数进行函数的构造生成。</li>
+<li>new返回的是具体的类型，而malloc返回的是void*指针。</li>
+<li>new内存分配失败后会返回异常，而malloc分配失败的返回是NULL</li>
+<li>new无需指定内存大小，而malloc需要</li>
+<li>new[]用于专门进行数组的处理，而malloc还是一样，知识申请内存空间的大小不同</li>
+<li>因为new是操作符，所以new可以被重载，但是malloc不行</li>
+</ul>
+<p>具体的区别有个<a href="http://www.cnblogs.com/QG-whz/p/5140930.html#_label1_0" target="_blank" rel="external">总结</a></p>
+<p><img src="http://obbyqbbco.bkt.clouddn.com/new%E5%92%8Cmalloc%E7%9A%84%E5%8C%BA%E5%88%AB.jpg" alt="malloc和new的区别"></p>
+<h2 id="29-为什么要用static-cast转换而不用c语言中的转换？"><a href="#29-为什么要用static-cast转换而不用c语言中的转换？" class="headerlink" title="29. 为什么要用static_cast转换而不用c语言中的转换？"></a>29. 为什么要用static_cast转换而不用c语言中的转换？</h2><p>首先这些C++里的四种类型转换都会提供类型检查，对于不太合适的类型转换会不允许进行。<br>static_cast相当于传统的C语言中那些“较为合理”的强制类型转换，较多的使用于基本数据类型之间的转换、基类对象指针（或引用）和派生类对象指针（或引用）之间的转换、一般的指针和void*类型的指针之间的转换等。static_cast操作对于类型转换的合理性会作出检查，对于一些过于“无理”的转换会加以拒绝。例如下面的转换：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> d = <span class="number">3.14</span>;</div><div class="line"><span class="keyword">double</span> *p = <span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>*&gt;(d);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>以上内容来自<a href="http://blog.csdn.net/k346k346/article/details/47750813" target="_blank" rel="external">这里</a></p>
+</blockquote>
+<p>就会遭到拒绝，但是这个在C语言中的转换是可以执行的。灵活性带来的是高风险，C++限制了部分灵活性，降低了风险。</p>
+<h2 id="30-异常机制是怎么回事？"><a href="#30-异常机制是怎么回事？" class="headerlink" title="30. 异常机制是怎么回事？"></a>30. 异常机制是怎么回事？</h2><p>详见<a href="http://blog.csdn.net/lyrebing/article/details/36186721" target="_blank" rel="external">这里</a></p>
+<h2 id="31-迭代器删除元素的会发生什么"><a href="#31-迭代器删除元素的会发生什么" class="headerlink" title="31. 迭代器删除元素的会发生什么?"></a>31. 迭代器删除元素的会发生什么?</h2><p>这里考的是迭代器失效的问题。有些容器删除某些元素的时候，根据元素的位置，可能会导致一些迭代器失效。下面是不同容器的各种操作迭代器是否会失效的说明：</p>
+<ul>
+<li><p>对于<strong>关联式容器（map，set，multimap，multiset）</strong>，删除当前的iterator，仅仅会导致当前iterator失效，只要在erase时，递增当前iterator即可。这是因为对于这些关联式容器，底层使用红黑树来实现，插入、删除一个节点不会对其他节点产生影响。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = cont.begin();it!=end();)&#123;</div><div class="line">	cont.erase(it++);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>对于序列式容器（特别是支持随机存取的容器：vector、deque），删除当前iterator会使<strong>后面所有元素的iterator都失效</strong>，因为这些支持随机存取的容器使用连续分配的内存，删除一个元素会导致后面的所有元素都往前移动一个位置。删除代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it = cont.begin();it!=cont.end();)&#123;</div><div class="line">	it = cont.erase(it);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>list</strong>是序列式容器里的特例，因为它使用数组存取，对于元素的获取也只是通过指针，所以当前iterator失效并不会影响其他的元素，同样可以使用it++的形式删除。</p>
+<h2 id="32-各容器特性总结"><a href="#32-各容器特性总结" class="headerlink" title="32. 各容器特性总结"></a>32. 各容器特性总结</h2><p>对于deque的容量更新方式，可以参考<a href="http://ibillxia.github.io/blog/2014/07/13/stl-source-insight-3-sequential-containers-3-deque-and-stack-queue/" target="_blank" rel="external">这里</a>描述的比较清楚。<br><img src="http://obbyqbbco.bkt.clouddn.com/%E5%90%84%E5%AE%B9%E5%99%A8%E6%AF%94%E8%BE%83.jpg" alt="各容器比较"></p>
+<h2 id="33-必须在构造函数初始化式里进行初始化的数据成员有哪些？"><a href="#33-必须在构造函数初始化式里进行初始化的数据成员有哪些？" class="headerlink" title="33. 必须在构造函数初始化式里进行初始化的数据成员有哪些？"></a>33. 必须在构造函数初始化式里进行初始化的数据成员有哪些？</h2><p>说明白点就是那些const类型的数和具有const情况的数。</p>
+<ul>
+<li>const关键词修饰的数据成员</li>
+<li>类型是引用的数据成员</li>
+<li>需要初始化的成员是对象的情况<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">int</span>&amp; i;</div><div class="line">	<span class="keyword">const</span> <span class="keyword">int</span> j;</div><div class="line">	<span class="built_in">string</span> str;</div><div class="line">	A(<span class="keyword">int</span>&amp; i,<span class="keyword">int</span> j,<span class="built_in">string</span>&amp; str):i(i),j(j),str(str)&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>至于第三种情况的原因是如果不是用初始化列表的形式进行初始化的话，会造成首先生成一个对象，然后再将另一个对象的值赋给这个新生成的对象，会调用构造函数&amp;拷贝函数（operator=)，如果直接使用初始化列表的形式，那么只会调用拷贝构造函数。效率会高一些。</p>
+<p>初始化列表的实际产生方式会以适当的顺序在实际的构造函数中会产生一些赋值的代码，赋值的顺序是类中成员数据的定义顺序，与初始化列表的书写顺序无关。但是初始化列表一定会在构造函数内的实际代码之前。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">int</span> a;</div><div class="line">	<span class="keyword">int</span> b;</div><div class="line">	<span class="keyword">int</span> c;</div><div class="line">	A():c(<span class="number">1</span>),b(<span class="number">1</span>)&#123;</div><div class="line">		a = c;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在以上代码中，b元素的赋值会在c之前，但是a元素的赋值会在b、c之后。</p>
+<h2 id="34-类的封装：private，protected，public"><a href="#34-类的封装：private，protected，public" class="headerlink" title="34. 类的封装：private，protected，public"></a>34. 类的封装：private，protected，public</h2><p>这些词可以作用在两个地方，第一个是修饰类内成员函数、成员数据，另一个是在继承的时候修饰基类。下面会根据这两种情况分别讨论。</p>
+<ul>
+<li>修饰类内成员函数和数据成员<ul>
+<li>private<br>只能由该类中的函数和该类的友元函数访问</li>
+<li>protected<br>可以被该类中的函数，子类中的函数和友元函数访问</li>
+<li>public<br>可以被该类中的函数，子类中的函数，友元函数和该类的对象访问</li>
+</ul>
+</li>
+<li>修饰基类<ul>
+<li>private<br>父类中的public、protected属性在子类中自动变成private</li>
+<li>protected<br>父类中的public、protected属性在子类中变成protected</li>
+<li>public<br>不改变父类中的public和protected属性。</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结</strong><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">int</span> a;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getA</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> a;&#125;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getB</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> b;&#125;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getC</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> c;&#125;</div><div class="line">	<span class="function"><span class="keyword">double</span> <span class="title">average</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(sum())/<span class="number">3</span>;&#125;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">	<span class="keyword">int</span> b;</div><div class="line">	</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> c;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> a+b+c;&#125;</div><div class="line">&#125;</div><div class="line">A a;</div><div class="line">a.getA();</div><div class="line">a.getB();</div><div class="line">a.getC();</div><div class="line">a.sum(); <span class="comment">//提示访问限制，无法访问sum函数。</span></div><div class="line">a.b;<span class="comment">//提示访问限制，无法访问b</span></div></pre></td></tr></table></figure></p>
+<p>如果有B类public继承A类，则A中的所有内容的访问限制被B继承，如果是protected继承，那么public域会变成protected，如果是private继承，那么public域和protected域都会变成private域。如果不加关键词，struct默认使用public继承，class默认使用private继承。即<code>class B:A</code>等价于<code>class B: private A</code></p>
+<h2 id="35-auto-ptr类"><a href="#35-auto-ptr类" class="headerlink" title="35. auto_ptr类"></a>35. auto_ptr类</h2><p>属于智能指针类，在C++11版本之后，就变成了shared_ptr和unique_ptr。在C++11中，auto_ptr被置为deprecated。</p>
+<ul>
+<li><p>unique_ptr<br>unique_ptr从名字上来看可以看出，这个对象里存放的内容在整个程序中只能出现一次。不能有copy语义，只能是move语义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; p1(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">5</span>));</div><div class="line"><span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; p2 = p1; <span class="comment">// 编译会出错</span></div><div class="line"><span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;<span class="keyword">int</span>&gt; p3 = <span class="built_in">std</span>::move (p1); <span class="comment">// 转移所有权，现在那块内存归p3所有, p1成为无效的指针。</span></div><div class="line">p3.reset(); <span class="comment">//释放内存。</span></div><div class="line">p1.reset(); <span class="comment">//实际上什么都没做。</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>shared_ptr<br>shared_ptr从名字上可以看出，这是个可以共享的指针，可以有多个指针同时指向同一块内存，这是unique_ptr无法做到的。底层用引用计数的方式实现，即每增加一个指针，该内存的引用计数+1，减少一个指针，内存引用计数-1，当为0的时候，内存就会被清除。具体代码如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p1(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">5</span>));</div><div class="line"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p2 = p1; <span class="comment">// 都指向同一内存。</span></div><div class="line">p1.reset(); <span class="comment">// 因为p2还在，所以内存没有释放。</span></div><div class="line">p2.reset(); <span class="comment">// 释放内存，因为没有shared_ptr指向那块内存了。</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>随着引用计数而来的就是循环引用产生无法删除的情况。为了避免循环引用的情况出现，可以使用weak_ptr，弱引用只引用不增加或删减计数。如果一块内存被shared_ptr和weak_ptr同时引用，当所有的shared_ptr析构了之后，不管有没有weak_ptr引用该内存，内存会被释放。 from <a href="https://zh.wikipedia.org/wiki/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88" target="_blank" rel="external">wikipedia</a><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p1(<span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">5</span>));</div><div class="line"><span class="built_in">std</span>::weak_ptr&lt;<span class="keyword">int</span>&gt; wp1 = p1; <span class="comment">// 还是只有p1有所有权。</span></div><div class="line">&#123;</div><div class="line">  <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p2 = wp1.lock(); <span class="comment">// p1和p2都有所有权</span></div><div class="line">  <span class="keyword">if</span> (p2) <span class="comment">// 使用前需要检查</span></div><div class="line">  &#123; </div><div class="line">    <span class="comment">// 使用p2</span></div><div class="line">  &#125;</div><div class="line">&#125; <span class="comment">// p2析构了，现在只有p1有所有权。</span></div><div class="line">p1.reset(); <span class="comment">// 内存被释放。</span></div><div class="line"><span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;<span class="keyword">int</span>&gt; p3 = wp1.lock(); <span class="comment">// 因为内存已经被释放了，所以得到的是空指针。</span></div><div class="line"><span class="keyword">if</span>（p3）</div><div class="line">&#123;</div><div class="line">  <span class="comment">// 不会执行到这。</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="36-指向数据成员的指针"><a href="#36-指向数据成员的指针" class="headerlink" title="36. 指向数据成员的指针"></a>36. 指向数据成员的指针</h2><p>这个点一般会在选择题或者填空题中问。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">int</span> x,y,z;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>问<code>&amp;A::z</code>是多少？<br>表示的是z在A类中的偏移是多少，最低限度是x、y大小的总和，但是对于有virtual成员函数的类来说，还要加上一个vptr。按照这种情况推理，那么就是12，但是如果真这么回答，你就<strong>错了</strong>！为了区分<code>&amp;A::x</code>和0，会将所有的地址偏移加上1。</p>
+<ul>
+<li>取一个nonstatic data member的地址，就会得到它在class中的偏移量</li>
+<li>取一个绑定在类实例上的data member的地址，就会得到该member在内存中的真正地址。</li>
+</ul>
+<h2 id="37-C-空类有哪些成员函数"><a href="#37-C-空类有哪些成员函数" class="headerlink" title="37. C++空类有哪些成员函数"></a>37. C++空类有哪些成员函数</h2><ul>
+<li>缺省构造函数</li>
+<li>缺省拷贝构造函数</li>
+<li>缺省析构函数</li>
+<li>缺省赋值运算符</li>
+<li>缺省取址运算符</li>
+<li>缺省取值运算符（const）</li>
+</ul>
+<h2 id="38-C-修饰类关键词总结"><a href="#38-C-修饰类关键词总结" class="headerlink" title="38. C++修饰类关键词总结"></a>38. C++修饰类关键词总结</h2><p>所谓修饰类关键词就是那种可以作用在其他关键词之上增加一些语义信息的关键词，下面给出我目前知道的所有修饰类关键词</p>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a><strong>const</strong></h3><ul>
+<li>在类中修饰成员函数表示该成员函数不能将类成员变量当做左值使用</li>
+<li>在类中修饰成员变量表示成员变量只能被赋值一次，需要在构造函数的初始化列表里进行赋值</li>
+<li><strong>位置</strong>：成员函数后，成员变量前。<h3 id="static"><a href="#static" class="headerlink" title="static"></a><strong>static</strong></h3></li>
+<li>在类中修饰成员函数表示该成员函数对类的所有实例都一样，是一个类方法。由于调用不需要this指针，所以在static成员函数中不能调用非static成员函数。</li>
+<li>在类中修饰成员变量表示成员变量是整个类的成员变量，所有类都一样</li>
+<li><strong>位置</strong>：成员函数和成员变量前。<h3 id="virtual"><a href="#virtual" class="headerlink" title="virtual"></a><strong>virtual</strong></h3></li>
+<li>只能修饰成员函数，放在成员函数前，若后面加上=0表示纯虚函数。<h3 id="final"><a href="#final" class="headerlink" title="final"></a><strong>final</strong></h3></li>
+<li>修饰类表示该类是最终版本，不允许作为基类被继承</li>
+<li>修饰虚函数表示该虚函数不允许被重写<strong>不能修饰非虚函数</strong></li>
+<li><strong>位置</strong>：在类和成员函数的后面。  <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> FinalBase final&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="keyword">virtual</span> <span class="title">say</span><span class="params">()</span> final</span>&#123;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"hello"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">class</span> deriveClass :<span class="keyword">public</span> FinalBase &#123; <span class="comment">//会报错，不允许继承final修饰的类</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">say</span><span class="params">()</span></span>&#123;&#125;;    <span class="comment">//就算上面可以继承，这个函数也会报错，因为不能重写final修饰的虚函数</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="override"><a href="#override" class="headerlink" title="override"></a><strong>override</strong></h3><ul>
+<li>只能修饰类中的虚成员函数</li>
+<li><strong>位置</strong>：成员函数名之后  <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> A</div><div class="line">&#123;</div><div class="line">   	<span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>;</div><div class="line">   	<span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span></span>;</div><div class="line">&#125;;</div><div class="line">	<span class="keyword">struct</span> B : A</div><div class="line">&#123;</div><div class="line">   	<span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> <span class="keyword">const</span> override</span>; <span class="comment">// Error: B::foo does not override A::foo (signature mismatch) const是一定要满足的</span></div><div class="line">   	<span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> override</span>; <span class="comment">// OK: B::foo overrides A::foo</span></div><div class="line">   	<span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span> override</span>; <span class="comment">// Error: A::bar is not virtual</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="mutable"><a href="#mutable" class="headerlink" title="mutable"></a><strong>mutable</strong></h3><ul>
+<li>用于修饰类成员变量，表示即使用一个const的函数或者类对象，这个成员变量仍然可以作为左值进行更改</li>
+<li><strong>位置</strong>：<code>mutable int n2</code><h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3>constexpr关键词定义表示可以在编译期间就可以知道函数或者变量的值，不一定要在类中使用。更具体的解释可以参考<a href="https://www.devbean.net/2012/05/cpp11_constexpr/" target="_blank" rel="external">这里</a></li>
+<li>修饰函数表示该函数可以在编译器运行，所以函数的参数都必须是常量</li>
+</ul>
+<h3 id="default"><a href="#default" class="headerlink" title="=default"></a><strong>=default</strong></h3><ul>
+<li>一般用在那种能由编译器生成的函数<strong>37</strong>中的函数，表示希望编译器帮忙生成函数主体，然后自己可以不用实现<h3 id="delete"><a href="#delete" class="headerlink" title="=delete"></a><strong>=delete</strong></h3></li>
+<li>一般用在类中用于删除某个函数，表示该函数实际上不存在。<br><strong>所有有=开头的关键词都用在函数声明式之后大括号之前</strong>。</li>
+</ul>
+<p>… To Be Continued</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/DP_BP/" rel="next" title="动态规划:背包问题">
+                <i class="fa fa-chevron-left"></i> 动态规划:背包问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/21/C++_interview_questions1/" rel="prev" title="C++面试常见问题（一）">
+                C++面试常见问题（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JustKitt" />
+          <p class="site-author-name" itemprop="name">JustKitt</p>
+           
+              <p class="site-description motion-element" itemprop="description">JustKitt的个人博客，记录问题解决方法的地方</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#20-STL有哪些容器，对比vector和set"><span class="nav-number">1.</span> <span class="nav-text">20. STL有哪些容器，对比vector和set</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列式容器"><span class="nav-number">1.1.</span> <span class="nav-text">序列式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vector"><span class="nav-number">1.1.1.</span> <span class="nav-text">vector</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list"><span class="nav-number">1.1.2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deque"><span class="nav-number">1.1.3.</span> <span class="nav-text">deque</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联式容器"><span class="nav-number">1.2.</span> <span class="nav-text">关联式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#set和map"><span class="nav-number">1.2.1.</span> <span class="nav-text">set和map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unordered-set和unordered-map"><span class="nav-number">1.2.2.</span> <span class="nav-text">unordered_set和unordered_map</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-红黑树的定义和解释"><span class="nav-number">2.</span> <span class="nav-text">21. 红黑树的定义和解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-const关键字的作用"><span class="nav-number">3.</span> <span class="nav-text">22. const关键字的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-静态成员函数和数据成员有什么意义？"><span class="nav-number">4.</span> <span class="nav-text">23. 静态成员函数和数据成员有什么意义？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-什么是模板特化？为什么要模板特化？"><span class="nav-number">5.</span> <span class="nav-text">24. 什么是模板特化？为什么要模板特化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#25-explicit是干什么用的？"><span class="nav-number">6.</span> <span class="nav-text">25. explicit是干什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#26-strcpy返回类型是干嘛用的"><span class="nav-number">7.</span> <span class="nav-text">26. strcpy返回类型是干嘛用的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#27-内存溢出有那些因素？"><span class="nav-number">8.</span> <span class="nav-text">27. 内存溢出有那些因素？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存泄露"><span class="nav-number">8.1.</span> <span class="nav-text">内存泄露</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存溢出"><span class="nav-number">8.2.</span> <span class="nav-text">内存溢出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#28-new与malloc的区别，delet和free的区别"><span class="nav-number">9.</span> <span class="nav-text">28. new与malloc的区别，delet和free的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#29-为什么要用static-cast转换而不用c语言中的转换？"><span class="nav-number">10.</span> <span class="nav-text">29. 为什么要用static_cast转换而不用c语言中的转换？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#30-异常机制是怎么回事？"><span class="nav-number">11.</span> <span class="nav-text">30. 异常机制是怎么回事？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#31-迭代器删除元素的会发生什么"><span class="nav-number">12.</span> <span class="nav-text">31. 迭代器删除元素的会发生什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#32-各容器特性总结"><span class="nav-number">13.</span> <span class="nav-text">32. 各容器特性总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#33-必须在构造函数初始化式里进行初始化的数据成员有哪些？"><span class="nav-number">14.</span> <span class="nav-text">33. 必须在构造函数初始化式里进行初始化的数据成员有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#34-类的封装：private，protected，public"><span class="nav-number">15.</span> <span class="nav-text">34. 类的封装：private，protected，public</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#35-auto-ptr类"><span class="nav-number">16.</span> <span class="nav-text">35. auto_ptr类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#36-指向数据成员的指针"><span class="nav-number">17.</span> <span class="nav-text">36. 指向数据成员的指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#37-C-空类有哪些成员函数"><span class="nav-number">18.</span> <span class="nav-text">37. C++空类有哪些成员函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#38-C-修饰类关键词总结"><span class="nav-number">19.</span> <span class="nav-text">38. C++修饰类关键词总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">19.1.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static"><span class="nav-number">19.2.</span> <span class="nav-text">static</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#virtual"><span class="nav-number">19.3.</span> <span class="nav-text">virtual</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#final"><span class="nav-number">19.4.</span> <span class="nav-text">final</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#override"><span class="nav-number">19.5.</span> <span class="nav-text">override</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutable"><span class="nav-number">19.6.</span> <span class="nav-text">mutable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constexpr"><span class="nav-number">19.7.</span> <span class="nav-text">constexpr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#default"><span class="nav-number">19.8.</span> <span class="nav-text">=default</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">19.9.</span> <span class="nav-text">=delete</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JustKitt</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

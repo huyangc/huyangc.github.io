@@ -1,0 +1,822 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++,面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="转载请注明出处：blog.justkitt.com 1. 多态性都有哪些？重写分为两种情况，子类重写父类的虚函数，子类重写父类的非虚函数。前一种情况被称为多态。多态属于函数地址晚绑定（运行时绑定）的情况，而后一种属于静态的，地址是早绑定的，在编译器编译期间就会确定函数的地址被称为覆盖。">
+<meta name="keywords" content="C++,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++面试常见问题（一）">
+<meta property="og:url" content="http://blog.justkitt.com/2017/05/21/C++_interview_questions1/index.html">
+<meta property="og:site_name" content="JustKitt&#39;s blog">
+<meta property="og:description" content="转载请注明出处：blog.justkitt.com 1. 多态性都有哪些？重写分为两种情况，子类重写父类的虚函数，子类重写父类的非虚函数。前一种情况被称为多态。多态属于函数地址晚绑定（运行时绑定）的情况，而后一种属于静态的，地址是早绑定的，在编译器编译期间就会确定函数的地址被称为覆盖。">
+<meta property="og:image" content="https://s6.postimg.org/6s05j9ky9/image.jpg">
+<meta property="og:updated_time" content="2017-05-21T07:07:12.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++面试常见问题（一）">
+<meta name="twitter:description" content="转载请注明出处：blog.justkitt.com 1. 多态性都有哪些？重写分为两种情况，子类重写父类的虚函数，子类重写父类的非虚函数。前一种情况被称为多态。多态属于函数地址晚绑定（运行时绑定）的情况，而后一种属于静态的，地址是早绑定的，在编译器编译期间就会确定函数的地址被称为覆盖。">
+<meta name="twitter:image" content="https://s6.postimg.org/6s05j9ky9/image.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justkitt.com/2017/05/21/C++_interview_questions1/"/>
+
+
+
+
+
+  <title>C++面试常见问题（一） | JustKitt's blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JustKitt's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/C++_interview_questions1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JustKitt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JustKitt's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++面试常见问题（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T15:07:12+08:00">
+                2017-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
+<h2 id="1-多态性都有哪些？"><a href="#1-多态性都有哪些？" class="headerlink" title="1. 多态性都有哪些？"></a>1. 多态性都有哪些？</h2><p>重写分为两种情况，子类重写父类的虚函数，子类重写父类的非虚函数。前一种情况被称为多态。多态属于函数地址晚绑定（运行时绑定）的情况，而后一种属于静态的，地址是早绑定的，在编译器编译期间就会确定函数的地址被称为覆盖。<br><a id="more"></a></p>
+<ul>
+<li><p>静态多态<br>使用模板来进行的多态实现</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Car</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">const</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"run a car"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">class</span> Airplane</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">const</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"run a airplane"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Vehicle&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">run_vehicle</span><span class="params">(<span class="keyword">const</span> Vehicle&amp; vehicle)</span></span>&#123;</div><div class="line">	vehicle.run();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>动态多态<br>使用虚函数来实现</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> Vehicle&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="keyword">virtual</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">void</span> Vehicle::run() <span class="keyword">const</span>&#123;    <span class="comment">//纯虚函数同样可以被实现，但是仍然不能被实例化，注意仍然要带有const修饰符。</span></div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"base class"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">void</span> Vehicle::run()</div><div class="line"><span class="keyword">class</span> Airplane: <span class="keyword">public</span> Vehicle&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;    <span class="comment">//注意： 这里如果没有const则没有重写父类虚函数</span></div><div class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"Airplane run"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	Vehicle* ve;</div><div class="line">	Airplane airplane;</div><div class="line">	ve = &amp;airplane;</div><div class="line">	ve-&gt;run();    <span class="comment">//输出 Airplane run</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="2-动态绑定怎么实现？"><a href="#2-动态绑定怎么实现？" class="headerlink" title="2. 动态绑定怎么实现？"></a>2. 动态绑定怎么实现？</h2><p>表现形式：用基类指针指向子类实例，通过基类指针来调用子类中的函数。<br>底层原理：在含有虚函数的类中有个虚表指针（vptr），这个指针指向一个函数虚表（vtbl），函数的实际地址会在实际运行的时候再存在这个虚表里，函数的执行通过vptr首先找到vtbl然后再在vtbl中找到相应的条目，获取到实际的地址。</p>
+<h2 id="3-类型转换有哪些？"><a href="#3-类型转换有哪些？" class="headerlink" title="3. 类型转换有哪些？"></a>3. 类型转换有哪些？</h2><ul>
+<li>最基本的C的强制类型转换：在对象前面用(typename) 来表示</li>
+<li><strong><code>anothertype = static_cast&lt;type&gt;(instance)</code></strong> :基本数据类型之间的转换，若涉及到类，则只能在有相互联系的类型中相互转换</li>
+<li><strong><code>const_cast</code></strong>:更改表达式的常量属性，可以把一个表达式变成常量或者把一个常量表达式变成非常量</li>
+<li><strong><code>reinterpret_cast</code></strong>：和C风格相似的能力，可以转换任何内置类型为其他数据类型，可以转换指针类型为其他类型，把其他类型转换为指针，无需考虑类型安全。<em>不推荐使用</em></li>
+<li><strong><code>dynamic_cast</code></strong>:其他的转换都是编译时完成，dynamic_cast是运行时完成，需要进行类型检查；不能用于内置数据类型转换；转换成功返回引用或指针，失败返回<code>nullptr</code>；基类必须拥有虚函数，否则编译不通过；<strong>向上类型转换dynamic_cast和static_cast一样，但是向下类型转换，dynamic_cast有类型检查，static_cast没有，故在这种情况下比static_cast更安全</strong>。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在C++中内置类型转换使用static_cast，类之间的类型转换用dynamic_cast，常量属性赋予用const_cast，指针之间的各种转换使用reinterpret_cast。</p>
+<h2 id="4-操作符重载，具体如何定义？"><a href="#4-操作符重载，具体如何定义？" class="headerlink" title="4. 操作符重载，具体如何定义？"></a>4. 操作符重载，具体如何定义？</h2><p>操作符重载有两种形式：</p>
+<ul>
+<li>定义在类中</li>
+<li>定义在类外，但是通过友元声明是类的友元函数。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	A(<span class="keyword">int</span> data):data(data)&#123;&#125;</div><div class="line">	A <span class="keyword">operator</span>+(A&amp;);                 <span class="comment">//</span></div><div class="line">	A <span class="keyword">operator</span>-(A&amp;);                 <span class="comment">//定义在类中</span></div><div class="line">	A <span class="keyword">operator</span>*(A&amp;);                 <span class="comment">//</span></div><div class="line">	A <span class="keyword">operator</span>/(A&amp;);                 <span class="comment">//</span></div><div class="line">	<span class="keyword">friend</span> A <span class="keyword">operator</span>+(A&amp;,A&amp;);	   <span class="comment">//</span></div><div class="line">	<span class="keyword">friend</span> A <span class="keyword">operator</span>-(A&amp;,A&amp;);       <span class="comment">// 友元函数</span></div><div class="line">	<span class="keyword">friend</span> A <span class="keyword">operator</span>*(A&amp;,A&amp;);       <span class="comment">//  </span></div><div class="line">	<span class="keyword">friend</span> A <span class="keyword">operator</span>/(A&amp;,A&amp;);       <span class="comment">//</span></div><div class="line">	<span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; out,A&amp; a); <span class="comment">//输入输出流操控运算符重载需要用友元函数的形式</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line"> 	<span class="keyword">int</span> data;</div><div class="line">&#125;</div><div class="line">A A::<span class="keyword">operator</span>+(A&amp; a)&#123;</div><div class="line">	<span class="keyword">return</span> A(data+a.data)</div><div class="line">&#125;</div><div class="line">...</div><div class="line"></div><div class="line">A <span class="keyword">operator</span>+(A&amp; a1,A&amp; a2)&#123;</div><div class="line">	<span class="keyword">return</span> A(a1.data+a2.data);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; out,A&amp; a)&#123;</div><div class="line">	out&lt;&lt;a.data&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="keyword">return</span> out;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>解释：<br>虽然声明在类内部看上去会稍微简单一些，但是考虑到类内部的操作符的调用形式实际上可以写成obj.operator+(obj1)这种形式，也就是说，只能应对一个obj+xxx的形式，对于xxx+obj这种形式使用类内运算符重载就无法支持了，所以一般推荐使用友元函数的方式。对于拷贝运算符=，需要特别注意的是一定要把参数声明为引用或指针（一般为引用），这样可以避免一个无限递归的过程。实参的传递需要进行拷贝构造。</p>
+<h2 id="5-内存对齐的原则是什么？"><a href="#5-内存对齐的原则是什么？" class="headerlink" title="5. 内存对齐的原则是什么？"></a>5. 内存对齐的原则是什么？</h2><ul>
+<li>对于结构的各个成员，第一个成员位于偏移量为0的位置，以后每个数据成员的偏移量必须是min(#pragma pack()制定的数，这个数据成员自身的长度）的倍数</li>
+<li>数据成员完成各自对齐之后，结构（或联合）本身也要进行对齐，对齐将按照#pragma pack制定的数值和结构（联合）最大数据成员长度中，比较小的那个进行。</li>
+</ul>
+<h3 id="主要作用："><a href="#主要作用：" class="headerlink" title="主要作用："></a>主要作用：</h3><p>经过内存对齐后，CPU访问内存速度大大提升。</p>
+<h2 id="6-模板怎么实现？"><a href="#6-模板怎么实现？" class="headerlink" title="6. 模板怎么实现？"></a>6. 模板怎么实现？</h2><ul>
+<li>函数模板</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="comment">//typename和class没有什么不同</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(<span class="keyword">const</span> T&amp; v1,<span class="keyword">const</span> T&amp; v2)</span></span>&#123;</div><div class="line">...<span class="comment">//do something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实例化函数模板：一般由编译器来进行实例化的操作。</p>
+<ul>
+<li>类模板</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	T a;</div><div class="line">...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>类模板的实例化：一般由函数调用者决定。</p>
+<h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><h2 id="7-指针和const的用法"><a href="#7-指针和const的用法" class="headerlink" title="7. 指针和const的用法"></a>7. 指针和const的用法</h2><p><code>const int * p</code><br><code>int const * p</code>本质上两者是一样的。表示指针指向的是一个常量int，无法通过指针改变这个内容的值。<br><code>int * const p</code>表示指针是一个常量指针，无法改变指针指向的地址。</p>
+<h3 id="const可以修饰的位置"><a href="#const可以修饰的位置" class="headerlink" title="const可以修饰的位置"></a>const可以修饰的位置</h3><p>函数参数：表示函数不会通过参数修改实际传入的值<br>类的成员函数：表示该成员函数不会修改类中的值，也无法修改。（在该类型的成员函数中出现的类成员都只能作为右值出现）<br>类的成员变量：表示该类成员在所有类的成员函数中都不允许以左值的方式出现，在构造函数中必须通过初始化列表的方式进行初始化。否则会报错。<br>类的实例：被const修饰的类的实例也只能调用其const成员函数。</p>
+<h2 id="8-虚函数、纯虚函数、虚函数与析构函数。"><a href="#8-虚函数、纯虚函数、虚函数与析构函数。" class="headerlink" title="8. 虚函数、纯虚函数、虚函数与析构函数。"></a>8. 虚函数、纯虚函数、虚函数与析构函数。</h2><p>虚函数是指在类成员函数中以<code>virtual</code>关键词定义的函数，纯虚函数是在虚函数定义的基础上在最后加上<code>=0</code>。在一个具有多态性质的基类中，需要定义虚析构函数，因为如果不定义虚析构函数，在函数析构的过程中，就只会处理基类所对应的那块内存，对于整个继承链上的函数来说是不充分的。例子如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="keyword">virtual</span> <span class="title">run</span><span class="params">()</span></span>&#123;         <span class="comment">//虚函数</span></div><div class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"run in A"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="keyword">virtual</span> <span class="title">eat</span><span class="params">()</span> </span>= <span class="number">0</span>;    <span class="comment">//纯虚函数</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">class</span> B&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"run in B"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">"eat in B"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>首先，定义有纯虚函数的类就是抽象类，抽象类是不允许被实例化的（包括new的形式），如果一个类继承了抽象类，那么这个类如果在没有实现纯虚函数的前提下，仍然是抽象类，但是实现了之后就不属于抽象类了。基类中的纯虚函数可以自己实现，也可以不实现，不论是否实现，都无法实例化。</p>
+<h2 id="9-内联函数"><a href="#9-内联函数" class="headerlink" title="9. 内联函数"></a>9. 内联函数</h2><p><strong>定义</strong>：内联和函数在函数调用的过程中，会使用函数的定义体来直接替换函数的调用程序，这种替代行为会发生在编译阶段而不是程序运行阶段，这样的好处在于函数的调用会涉及到一系列的栈的使用，入栈和出栈的过程会被省略。省略的函数调用过程会提高效率和性能。<br><strong>与宏定义的区别</strong>：过程实际上是一样的，都是通过展开来避免函数调用的开销，但是内联函数会在展开的时候进行参数类型、返回值等，宏定义并不会，所以内联函数会更加安全。</p>
+<h3 id="内联函数代码"><a href="#内联函数代码" class="headerlink" title="内联函数代码"></a>内联函数代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">	... <span class="comment">//do something</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="宏定义代码"><a href="#宏定义代码" class="headerlink" title="宏定义代码"></a>宏定义代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> multi(a,b) (a*b)</span></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">multi</span><span class="params">(a,b)</span></span>;    <span class="comment">//产生错误，重名</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	multi(<span class="number">1</span>,<span class="number">2</span>)</div><div class="line">	multi(<span class="number">1</span>+<span class="number">2</span>,<span class="number">2</span>+<span class="number">3</span>)  <span class="comment">//产生意想不到的结果</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="10-typedef"><a href="#10-typedef" class="headerlink" title="10. typedef"></a>10. typedef</h2><ol>
+<li><p>定义一种类型别名，而不只是简单的宏替换。对于<code>char* pa,pb</code>，pb并不是指针类型，但是使用typedef之后，有</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">char</span>* PCHAR;</div><div class="line">PCHAR pa,pb;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在C中定义一个结构需要使用关键词structure，C++中可以直接使用名称，C不能省略structure，所以可以用typedef来进行类型声明</p>
+</li>
+<li>typedef定义了一种类型的新别名<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">char</span>* PSTR;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">mystrcmp</span><span class="params">(<span class="keyword">const</span> PSTR,<span class="keyword">const</span> PSTR)</span></span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>实际上定义了一个char* const，即常量指针而不是指向常量的指针。</p>
+<h2 id="11-排序算法"><a href="#11-排序算法" class="headerlink" title="11. 排序算法"></a>11. 排序算法</h2><h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><p>从各种类型的面试来看，快速排序在没有问题问的时候经常会出现，但是由于最近可能问烂了，所以有可能会问归并和堆排序。快速排序的思想是，首先找到一个key，然后用这个key把整个数组分成两个部分，前一个部分的数字都小于它，后一个部分的数字都大于它，这样这个key就被排到了它本身应该在的地方。采用归并的思想去解决排序的问题。代码如下<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums,<span class="keyword">int</span> begin,<span class="keyword">int</span> end)</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> j = begin;</div><div class="line">	<span class="keyword">int</span> key = nums[begin];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = begin+<span class="number">1</span>;i&lt;=end;++i)&#123;</div><div class="line">		<span class="keyword">if</span>(nums[i]&lt;key)&#123;</div><div class="line">			++j;</div><div class="line">			<span class="keyword">if</span>(j != i)</div><div class="line">				swap(nums[i],nums[j]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	swap(nums[j],nums[begin]);</div><div class="line">	<span class="keyword">return</span> j;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums,<span class="keyword">int</span> begin,<span class="keyword">int</span> end)</span></span>&#123;</div><div class="line">	<span class="keyword">if</span>(begin&lt;end)&#123;</div><div class="line">		<span class="keyword">int</span> mid = partition(nums,begin,end);</div><div class="line">		quick_sort(nums,begin,mid<span class="number">-1</span>);</div><div class="line">		quick_sort(nums,mid+<span class="number">1</span>,end);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><p>归并排序的思路在于不断地把一个数组分成两部分，直到最后分成两两比较的形式，然后再进行合并。所以归并排序比较重要的函数是merge函数。代码如下<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> first, <span class="keyword">int</span> mid, <span class="keyword">int</span> last, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; temp)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> i = first, j = mid + <span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> m = mid, n = last;</div><div class="line">	<span class="keyword">int</span> k = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (i &lt;= m&amp;&amp;j &lt;= n) &#123;</div><div class="line">		<span class="keyword">if</span> (nums[i]&lt;nums[j])</div><div class="line">			temp[k++] = nums[i++];</div><div class="line">		<span class="keyword">else</span></div><div class="line">			temp[k++] = nums[j++];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span> (i &lt;= m) temp[k++] = nums[i++];</div><div class="line">	<span class="keyword">while</span> (j &lt;= n) temp[k++] = nums[j++];</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;k; ++i) &#123;</div><div class="line">		nums[first+i] = temp[i];</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> begin, <span class="keyword">int</span> end, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; temp)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (begin&lt;end) &#123;</div><div class="line">		<span class="keyword">int</span> mid = begin + (-begin + end) / <span class="number">2</span>;</div><div class="line">		merge_sort(nums, begin, mid,temp);</div><div class="line">		merge_sort(nums, mid + <span class="number">1</span>, end,temp);</div><div class="line">		merge(nums, begin, mid, end, temp);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><p>堆排序的思路是先构建一个最小堆（最大堆），然后从这个最小（最大）堆里取根节点上的那个数，之后维护堆的性质，直到把堆中的所有元素都取完。代码如下<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">maxHeapify</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums,<span class="keyword">int</span> i,<span class="keyword">int</span> size)</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> leftChild = <span class="number">2</span>*i;</div><div class="line">	<span class="keyword">int</span> rightChild = <span class="number">2</span>*i+<span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> maxIndex = i;</div><div class="line">	<span class="keyword">if</span>(i&lt;=size/<span class="number">2</span>)&#123;            <span class="comment">//仅调整非叶结点</span></div><div class="line">		<span class="keyword">if</span>(leftChild&lt;=size&amp;&amp;nums[leftChild]&gt;nums[maxIndex])</div><div class="line">			maxIndex = leftChild;</div><div class="line">		<span class="keyword">if</span>(rightChild&lt;=size&amp;&amp;nums[rightChild]&gt;nums[maxIndex])</div><div class="line">			maxIndex = rightChild;</div><div class="line">		<span class="keyword">if</span>(maxIndex!=i)&#123;</div><div class="line">			swap(nums[maxIndex],nums[i]);</div><div class="line">			maxHeapify(nums,maxIndex,size);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;	</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums,<span class="keyword">int</span> size)</span></span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = size/<span class="number">2</span>;i&gt;=<span class="number">1</span>;--i)&#123;  <span class="comment">//数组的index从1开始，方便计算 leftChild = i*2,rightChild = i*2 + 1;</span></div><div class="line">		maxHeapify(nums,i,size);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">heap_sort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> size)</span></span>&#123;</div><div class="line">	buildHeap(nums,size);</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = size;i&gt;=<span class="number">1</span>;--i)&#123;</div><div class="line">		swap(nums[<span class="number">1</span>],nums[i]);</div><div class="line">		maxHeapify(nums,<span class="number">1</span>,i<span class="number">-1</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><p>冒泡排序的思想是重复走访要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。整个算法的过程会使得越小的元素经由交换慢慢“浮”到数列的前端，每次排完一轮，最大的那个数就到了最后那个位置上。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">bubble_sort(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;nums.size();++i)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;nums.size()-i<span class="number">-1</span>;++j)&#123;</div><div class="line">			<span class="keyword">if</span>(a[j]&gt;a[j+<span class="number">1</span>])</div><div class="line">				swap(a[j],a[j+<span class="number">1</span>]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="12-链接指示：-extern-“C”的作用？"><a href="#12-链接指示：-extern-“C”的作用？" class="headerlink" title="12. 链接指示： extern “C”的作用？"></a>12. 链接指示： extern “C”的作用？</h2><p>C++使用链接指示指出任意非C++函数所用的语言。链接指示有两种形式：单个的和复合的。</p>
+<ul>
+<li>单个的<br><code>extern &quot;C&quot; size_t strlen(const char*);</code></li>
+<li>复合的<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">extern</span> <span class="string">"C"</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">strcmp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* ,<span class="keyword">const</span> <span class="keyword">char</span>*)</span></span>;</div><div class="line">	<span class="function"><span class="keyword">char</span>* <span class="title">strcat</span><span class="params">(<span class="keyword">char</span>*,<span class="keyword">const</span> <span class="keyword">char</span>*)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="13-C语言和C-有什么区别？"><a href="#13-C语言和C-有什么区别？" class="headerlink" title="13. C语言和C++有什么区别？"></a>13. C语言和C++有什么区别？</h2><p>C++是一个面向对象的语言，C语言是一个面向过程的语言，C++中含有类这个概念，许多内容都围绕着类来进行，例如面向对象的三大特性：封装、继承、多态都是围绕着类来进行的，这对于C语言来说是完全不可能的。同时C++还添加了异常处理的方式。</p>
+<h2 id="14-strcpy函数的编写"><a href="#14-strcpy函数的编写" class="headerlink" title="14. strcpy函数的编写"></a>14. strcpy函数的编写</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">char</span>* <span class="title">strcpy</span><span class="params">(<span class="keyword">char</span>* strDest,<span class="keyword">char</span>* strSrc)</span></span>&#123;</div><div class="line">    assert(strDest != <span class="literal">nullptr</span>);</div><div class="line">    assert(strSrc != <span class="literal">nullptr</span>);</div><div class="line">    <span class="keyword">char</span>* ret = strDest;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;strSrc[i]!=<span class="string">'\0'</span>;++i)&#123;</div><div class="line">        strDest[i] = strSrc[i];</div><div class="line">	&#125;</div><div class="line">	strDest[i] = <span class="string">'\0'</span>;</div><div class="line">	<span class="keyword">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>需要考虑的点：</p>
+<ul>
+<li>传入的参数不应为nullptr</li>
+<li>要记录返回内存地址的首地址</li>
+<li>在用for循环检测到’\0’的时候要记得在最后加上’\0’</li>
+<li>可能会发生覆盖的现象，即strDest的位置在strSrc和’\0’之前。</li>
+<li>返回值是char*的考虑是为直接可以将返回值作为另一个函数的参数传入</li>
+</ul>
+<h2 id="15-数据结构二叉树的非递归遍历"><a href="#15-数据结构二叉树的非递归遍历" class="headerlink" title="15. 数据结构二叉树的非递归遍历"></a>15. 数据结构二叉树的非递归遍历</h2><p>思路：一般在问一个递归问题的非递归解法的时候，可以考虑用栈来模拟递归函数带来的那种进出的感觉。对于二叉树的遍历方式，主要有四种情况：</p>
+<ul>
+<li>前序遍历</li>
+</ul>
+<p>递归形式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ret,TreeNode* root)</span></span>&#123;</div><div class="line">	<span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	ret.push_back(root-&gt;val);</div><div class="line">	helper(ret,root-&gt;left);</div><div class="line">	helper(ret,root-&gt;right);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>非递归形式：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">pre_traverse</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ret,TreeNode* root)</span></span>&#123;</div><div class="line">	<span class="built_in">stack</span>&lt;TreeNode*&gt; s;</div><div class="line">	TreeNode* p = root;</div><div class="line">	<span class="keyword">while</span>(p!=<span class="literal">nullptr</span>||!s.empty())&#123;</div><div class="line">		<span class="keyword">while</span>(p!=<span class="literal">nullptr</span>)&#123;</div><div class="line">			ret.push_back(p-&gt;val);</div><div class="line">			s.push(p);</div><div class="line">			p = p-&gt;left;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(!s.empty())&#123;</div><div class="line">			p = s.top();</div><div class="line">			s.pop();</div><div class="line">			p = p-&gt;right;    <span class="comment">//在把p的右节点存入的时候弹出p</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>中序遍历<br>递归形式<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ret,TreeNode* root)</span></span>&#123;</div><div class="line">	<span class="keyword">if</span>(root == <span class="literal">nullptr</span>)&#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	helper(ret,root-&gt;left);</div><div class="line">	ret.push_back(root-&gt;val);</div><div class="line">	helper(ret,root-&gt;right);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>非递归形式<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">inorder_traverse</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ret,TreeNode* root)</span></span>&#123;</div><div class="line">	<span class="built_in">stack</span>&lt;TreeNode*&gt; s;</div><div class="line">	<span class="keyword">auto</span> p = root;</div><div class="line">	<span class="keyword">while</span>(p!=<span class="literal">nullptr</span>||!s.empty())&#123;</div><div class="line">		<span class="keyword">while</span>(p!=<span class="literal">nullptr</span>)&#123;</div><div class="line">			s.push(p);</div><div class="line">			p = p-&gt;left;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(!s.empty())&#123;</div><div class="line">			p = s.top();</div><div class="line">			ret.push_back(p-&gt;val);</div><div class="line">			s.pop();</div><div class="line">			p = p-&gt;right;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>后序遍历<br>递归方法<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ret,TreeNode* root)</span></span>&#123;</div><div class="line">	<span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	helper(ret,root-&gt;left);</div><div class="line">	helper(ret,root-&gt;right);</div><div class="line">	ret.push_back(root-&gt;val);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>非递归方法<br>思路：保证根节点在左孩子和右孩子被访问后才能被访问，所以对于任一节点P，先将其入栈，如果P不存在左孩子和右孩子，则直接访问它，如果P存在左孩子或右孩子，但是孩子都已经被访问过了，也同样可以访问该节点。如果是不能访问该节点的情况，就依次将P的左孩子和右孩子依次入栈。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">post_order</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; ret,TreeNode* root)</span></span>&#123;</div><div class="line">	<span class="built_in">stack</span>&lt;TreeNode*&gt; s;</div><div class="line">	TreeNode* cur;</div><div class="line">	TreeNode* pre = <span class="literal">nullptr</span>;</div><div class="line">	s.push(root);</div><div class="line">	<span class="keyword">while</span>(!s.empty())&#123;</div><div class="line">		cur = s.top();</div><div class="line">		<span class="keyword">if</span>((cur-&gt;left == <span class="literal">nullptr</span>&amp;&amp;cur-&gt;right == <span class="literal">nullptr</span>)||</div><div class="line">		   (pre!=<span class="literal">nullptr</span>&amp;&amp;(pre == cur-&gt;left||pre == cur-&gt;right)))</div><div class="line">		&#123;</div><div class="line">			ret.push_back(cur-&gt;val);</div><div class="line">			s.pop();</div><div class="line">			pre = cur;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span>(cur-&gt;right != <span class="literal">nullptr</span>)</div><div class="line">				s.push(cur-&gt;right);</div><div class="line">			<span class="keyword">if</span>(cur-&gt;left != <span class="literal">nullptr</span>)</div><div class="line">				s.push(cur-&gt;left);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>层次遍历<br>层次遍历使用队列来完成，每次记录都记录在当前队列中的节点的数量。然后用这个队列就可以完成所有的遍历情况。</li>
+</ul>
+<h2 id="16-继承机制中对象之间是如何转换的？"><a href="#16-继承机制中对象之间是如何转换的？" class="headerlink" title="16. 继承机制中对象之间是如何转换的？"></a>16. 继承机制中对象之间是如何转换的？</h2><p>在子类的实例对象所在的内存中，一般而言内存顶部是基类的内容。如果将一个子类对象赋予一个基类对象（非指针和引用），那么会发生自动截断，仅仅保留父类内容。子类对象值可以赋予基类对象，但是基类对象值赋予子类对象会产生问题。</p>
+<h2 id="17-继承机制中引用和指针之间如何转换？"><a href="#17-继承机制中引用和指针之间如何转换？" class="headerlink" title="17. 继承机制中引用和指针之间如何转换？"></a>17. 继承机制中引用和指针之间如何转换？</h2><p>C++中的指针仅仅表示这个指针值所指向的那块内存地址的大小而已，所以我感觉继承机制中指针之间的转换不就是表示所指向的内存大小会改变而已吗？因为类的继承机制，基类内容会在子类对象的上部分，所以对于基类指针来说，指向的内存块也仅仅是基类的范围，指不到子类的范围，但是子类的指针会比基类指针范围大，如果将基类对象赋予子类指针，会产生问题。</p>
+<h2 id="18-虚函数，虚函数表里面内存如何分配？"><a href="#18-虚函数，虚函数表里面内存如何分配？" class="headerlink" title="18. 虚函数，虚函数表里面内存如何分配？"></a>18. 虚函数，虚函数表里面内存如何分配？</h2><p>虚函数和虚函数表的情况是建立在基类和子类之间的继承关系基础上的，所以我们考虑一下三种集成情况。</p>
+<ul>
+<li>继承基类，没有重写基类虚函数</li>
+<li>继承基类，重写了基类虚函数</li>
+<li>多重继承，重写基类虚函数</li>
+</ul>
+<p>下面给出的图片是多重继承的类型，图片来自<a href="http://speakingbaicai.blog.51cto.com/5667326/1686404" target="_blank" rel="external">这里</a><br><img src="https://s6.postimg.org/6s05j9ky9/image.jpg" alt="多重继承"><br>即：继承会得到基类的虚指针，虚指针指向基类虚表，虚表里存放的是基类的虚函数地址，如果子类有更改，会相应地将虚表中的地址值给覆盖。这样就完成了继承过程中虚地址的分配。<strong>多重继承会得到所有基类的虚地址</strong>。</p>
+<h2 id="19-如何定义一个只能在堆上（new）或者栈上实例化的类？"><a href="#19-如何定义一个只能在堆上（new）或者栈上实例化的类？" class="headerlink" title="19. 如何定义一个只能在堆上（new）或者栈上实例化的类？"></a>19. 如何定义一个只能在堆上（new）或者栈上实例化的类？</h2><ul>
+<li>只能在堆上实例化的类<br>我们假设我们要实例化的类名为A，那么只能在堆上实例化的类的意思就是不能用<code>A a</code>这种形式来进行类对象的实例化，只能用<code>A* a = new A</code>这种形式来进行实例化。首先的想法是<strong>将构造函数设为private</strong>，这种方式有问题，就是第一种情况不能被访问，同时第二种情况也不能，因为new操作会先申请一块内存，然后在这块内存上调用类的构造函数去初始化，如果将类的构造函数设为private的话，new操作也无法进行初始化。所以这是有问题的。然后考虑到在栈上的空间会自己释放内存，然后调用类的析构函数，而new出来的对象需要自己调用delete，如果不调用delete的话，会一直存在于内存中。所以考虑可以将析构函数变成private的。这样可以new出来一个新对象，但是对象删除的时候需要额外写一个函数去操作。<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">delete</span> <span class="keyword">this</span></div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	~A()&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上这种问题的方式是在A类作为基类的情况下无法存在的，因为析构函数被声明为private的，所以任何继承A类的类都无法析构。如果需要让A类作为基类，则常将其析构函数设为virtual，然后在子类重写，已实现多态。所以可以将其设置为protected。</p>
+<ul>
+<li>只能建立在栈上<br>只有使用new运算符对象才会建立在堆上，所以将new运算符私有化之后就可以让类的对象无法实例化在堆上。<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> A&#123;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> * <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>)</span></span>&#123;&#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="keyword">operator</span> <span class="title">delete</span><span class="params">(<span class="keyword">void</span> * ptr)</span></span>&#123;&#125;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	A()&#123;&#125;</div><div class="line">	~A()&#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/C++_interview_questions2/" rel="next" title="C++面试常见问题（二）">
+                <i class="fa fa-chevron-left"></i> C++面试常见问题（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JustKitt" />
+          <p class="site-author-name" itemprop="name">JustKitt</p>
+           
+              <p class="site-description motion-element" itemprop="description">JustKitt的个人博客，记录问题解决方法的地方</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-多态性都有哪些？"><span class="nav-number">1.</span> <span class="nav-text">1. 多态性都有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-动态绑定怎么实现？"><span class="nav-number">2.</span> <span class="nav-text">2. 动态绑定怎么实现？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-类型转换有哪些？"><span class="nav-number">3.</span> <span class="nav-text">3. 类型转换有哪些？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-操作符重载，具体如何定义？"><span class="nav-number">4.</span> <span class="nav-text">4. 操作符重载，具体如何定义？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-内存对齐的原则是什么？"><span class="nav-number">5.</span> <span class="nav-text">5. 内存对齐的原则是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要作用："><span class="nav-number">5.1.</span> <span class="nav-text">主要作用：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-模板怎么实现？"><span class="nav-number">6.</span> <span class="nav-text">6. 模板怎么实现？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方法"><span class="nav-number">6.1.</span> <span class="nav-text">实现方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-指针和const的用法"><span class="nav-number">7.</span> <span class="nav-text">7. 指针和const的用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#const可以修饰的位置"><span class="nav-number">7.1.</span> <span class="nav-text">const可以修饰的位置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-虚函数、纯虚函数、虚函数与析构函数。"><span class="nav-number">8.</span> <span class="nav-text">8. 虚函数、纯虚函数、虚函数与析构函数。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-内联函数"><span class="nav-number">9.</span> <span class="nav-text">9. 内联函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内联函数代码"><span class="nav-number">9.1.</span> <span class="nav-text">内联函数代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#宏定义代码"><span class="nav-number">9.2.</span> <span class="nav-text">宏定义代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-typedef"><span class="nav-number">10.</span> <span class="nav-text">10. typedef</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-排序算法"><span class="nav-number">11.</span> <span class="nav-text">11. 排序算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">11.1.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-number">11.2.</span> <span class="nav-text">归并排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆排序"><span class="nav-number">11.3.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冒泡排序"><span class="nav-number">11.4.</span> <span class="nav-text">冒泡排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-链接指示：-extern-“C”的作用？"><span class="nav-number">12.</span> <span class="nav-text">12. 链接指示： extern “C”的作用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-C语言和C-有什么区别？"><span class="nav-number">13.</span> <span class="nav-text">13. C语言和C++有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-strcpy函数的编写"><span class="nav-number">14.</span> <span class="nav-text">14. strcpy函数的编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-数据结构二叉树的非递归遍历"><span class="nav-number">15.</span> <span class="nav-text">15. 数据结构二叉树的非递归遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-继承机制中对象之间是如何转换的？"><span class="nav-number">16.</span> <span class="nav-text">16. 继承机制中对象之间是如何转换的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-继承机制中引用和指针之间如何转换？"><span class="nav-number">17.</span> <span class="nav-text">17. 继承机制中引用和指针之间如何转换？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-虚函数，虚函数表里面内存如何分配？"><span class="nav-number">18.</span> <span class="nav-text">18. 虚函数，虚函数表里面内存如何分配？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-如何定义一个只能在堆上（new）或者栈上实例化的类？"><span class="nav-number">19.</span> <span class="nav-text">19. 如何定义一个只能在堆上（new）或者栈上实例化的类？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JustKitt</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
