@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法,动态规划," />
+  <meta name="keywords" content="Caffe,深度学习，C++," />
 
 
 
@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="转载请注明出处：blog.justkitt.com 问题描述有两个字符串s和t，找出s的所有不同的子序列，这些子序列是t。例如对于s=”rabbbit”,t = “rabbit”，那么s中去掉三个b的随便一个都可以构成t，所以s的所有不同的子序列是t的个数是3。">
-<meta name="keywords" content="算法,动态规划">
+<meta name="description" content="转载请注明出处：blog.justkitt.com 背景 A Blob is a wrapper over the actual data being processed and passed along by Caffe, and also under the hood provides synchronization capability between the CPU and the GPU">
+<meta name="keywords" content="Caffe,深度学习，C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动态规划:不同子序列（Distinct Subsequences）">
-<meta property="og:url" content="http://blog.justkitt.com/2017/05/21/DP_Distinct_Subsequence/index.html">
+<meta property="og:title" content="Caffe源码阅读之Blob">
+<meta property="og:url" content="http://blog.justkitt.com/2017/05/21/caffe_sourcecode_blob/index.html">
 <meta property="og:site_name" content="JustKitt&#39;s blog">
-<meta property="og:description" content="转载请注明出处：blog.justkitt.com 问题描述有两个字符串s和t，找出s的所有不同的子序列，这些子序列是t。例如对于s=”rabbbit”,t = “rabbit”，那么s中去掉三个b的随便一个都可以构成t，所以s的所有不同的子序列是t的个数是3。">
-<meta property="og:updated_time" content="2017-05-21T07:07:12.102Z">
+<meta property="og:description" content="转载请注明出处：blog.justkitt.com 背景 A Blob is a wrapper over the actual data being processed and passed along by Caffe, and also under the hood provides synchronization capability between the CPU and the GPU">
+<meta property="og:updated_time" content="2017-05-21T15:27:53.475Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动态规划:不同子序列（Distinct Subsequences）">
-<meta name="twitter:description" content="转载请注明出处：blog.justkitt.com 问题描述有两个字符串s和t，找出s的所有不同的子序列，这些子序列是t。例如对于s=”rabbbit”,t = “rabbit”，那么s中去掉三个b的随便一个都可以构成t，所以s的所有不同的子序列是t的个数是3。">
+<meta name="twitter:title" content="Caffe源码阅读之Blob">
+<meta name="twitter:description" content="转载请注明出处：blog.justkitt.com 背景 A Blob is a wrapper over the actual data being processed and passed along by Caffe, and also under the hood provides synchronization capability between the CPU and the GPU">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.justkitt.com/2017/05/21/DP_Distinct_Subsequence/"/>
+  <link rel="canonical" href="http://blog.justkitt.com/2017/05/21/caffe_sourcecode_blob/"/>
 
 
 
 
 
-  <title>动态规划:不同子序列（Distinct Subsequences） | JustKitt's blog</title>
+  <title>Caffe源码阅读之Blob | JustKitt's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -264,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/DP_Distinct_Subsequence/">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2017/05/21/caffe_sourcecode_blob/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JustKitt">
@@ -281,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">动态规划:不同子序列（Distinct Subsequences）</h1>
+          <h1 class="post-title" itemprop="name headline">Caffe源码阅读之Blob</h1>
         
 
         <div class="post-meta">
@@ -293,7 +293,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T15:07:12+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-21T15:49:50+08:00">
                 2017-05-21
               </time>
             
@@ -316,8 +316,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/动态规划/" itemprop="url" rel="index">
-                    <span itemprop="name">动态规划</span>
+                  <a href="/categories/Caffe/" itemprop="url" rel="index">
+                    <span itemprop="name">Caffe</span>
                   </a>
                 </span>
 
@@ -350,16 +350,19 @@
       
 
       
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+        <p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><blockquote>
+<p>A Blob is a wrapper over the actual data being processed and passed along by Caffe, and also under the hood provides synchronization capability between the CPU and the GPU. Mathematically, a blob is an N-dimensional array stored in a C-contiguous fashion.</p>
+<p>Caffe stores and communicates data using blobs. Blobs provide a unified memory interface holding data; e.g., batches of images, model parameters, and derivatives for optimization.</p>
+</blockquote>
+<a id="more"></a>
+<p>Blob是Caffe中用来存放实际数据的结构，一般是一个以C的连续数组存储的N维数组。对于一个4d blob(N,K,H,W)来说，一个(n,k,h,w)的实际地址为：((n*K+k)*H+h)*W+w。Caffe中的所有数据流动都是经由Blob进行封装的。</p>
+<p>Blob类不仅存放了前向传播所需要的数据，还存放了反向传播中计算的梯度，用于进行参数的更新。Blob还封装了从CPU和GPU中取数据和同步数据的方式。</p>
+<h2 id="写在最前面"><a href="#写在最前面" class="headerlink" title="写在最前面"></a>写在最前面</h2><p>在caffe的代码中，对于头文件里声明的类内属性，命名方式都是名字后面会有一道下划线，之后会在特定的地方初始化，这是一种通用的情况。Caffe中不同的元素都在该元素名称下的.hpp和.cpp中实现。<br>Blob的源码就位于Blob.hpp和Blob.cpp中，在Blob.hpp中会有一些类的定义，例如<code>class Blob{...}</code></p>
+<h2 id="Blob-hpp"><a href="#Blob-hpp" class="headerlink" title="Blob.hpp"></a>Blob.hpp</h2><p>在这里就不大段大段贴代码了，从我在网上查资料的情况来看，对于大段大段贴代码然后再在代码里注释的博客，我都很难看下去，所以在我自己的博客中，我需要使用另一种方式去读这样的源码。<br>我们打开blob.hpp这个文件，就可以看到在文件的开头引入了一些头文件，包括了一些C++标准库中的头文件和Caffe中的一些其他通用的头文件，其中，caffe/proto/caffe.pb.h这个头文件用来处理google protobuf的一些集成，syncedmem.hpp这个头文件是caffe封装的与Cuda相关的一些内存操作。这两个头文件会在之后进行介绍。<br>blob.hpp中有定义一个const常量<code>const int kMaxBlobAxes = 32</code>blob中最大支持的数据维数是32！<br>看一个类首先需要做的，就是看这个类的属性，然后再看这个类是怎样用这些属性去做什么事情。在Blob中，有六个属性，分别为：<code>data_, diff_, shape_data_, shape_, count_, capacity_</code>这六个属性的定义和具体的作用如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">shared_ptr&lt;SynceMemory&gt; data_  前向传播的数据</div><div class="line">shared_ptr&lt;SynceMemory&gt; diff_  反向传播的梯度</div><div class="line">shared_ptr&lt;SynceMemory&gt; shape_data_  每一维数据的大小</div><div class="line">vector&lt;int&gt; shape_  数据的形状</div><div class="line">int count_  当前容量</div><div class="line">int capacity_  能够容纳的最大容量</div></pre></td></tr></table></figure></p>
+<p>然后再看这些属性是怎么初始化的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Blob类有三个构造函数：</div><div class="line">Blob():data_(),diff_(),count_(0),capacity_(0)&#123;&#125;</div><div class="line">Blob(const vector&lt;int&gt;&amp; shape);</div><div class="line">Blob(const int num,const int channels,const int height, const int width);</div><div class="line"> 这个构造函数将要被弃用了，说明之后的Blob的实例化需要使用shape这种形式。</div><div class="line">后两种构造函数都被声明为explicit的，表明不能被隐式类型转换</div></pre></td></tr></table></figure></p>
+<p>在构造函数中，caffe会调用reshape函数进行内存的初始化。同时，reshape函数会在前向传播的时候，重新塑造传送内容的形状。</p>
 
-<p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a></p>
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>有两个字符串s和t，找出s的所有不同的子序列，这些子序列是t。例如对于s=”rabbbit”,t = “rabbit”，那么s中去掉三个b的随便一个都可以构成t，所以s的所有不同的子序列是t的个数是3。<br><a id="more"></a></p>
-<h1 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h1><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>字符串子序列的问题一般都是动态规划的问题（by娇哥），那么动态规划的问题就分三步开始</p>
-<h3 id="首先定义状态（即定义动态规划的状态存储数组dp）"><a href="#首先定义状态（即定义动态规划的状态存储数组dp）" class="headerlink" title="首先定义状态（即定义动态规划的状态存储数组dp）"></a>首先定义状态（即定义动态规划的状态存储数组dp）</h3><p>用一个二维数组来表示状态（非常自然，因为有两个字符串）dp[i][j]，其中i表示的是t字符串的长度，j表示的是s字符串的长度。其意义表示：s[0-j]中的子序列是t[0-i]的不同子序列的个数。</p>
-<h3 id="其次定义状态转移方程"><a href="#其次定义状态转移方程" class="headerlink" title="其次定义状态转移方程"></a>其次定义状态转移方程</h3><p>状态转移方程的思想是当前子序列的个数dp[i][j]肯定至少是s在上一个位置时的子序列的个数，如果s和t在i和j位置有相同字符的话，那么其子序列的个数应该是上一个位置的个数加上dp[i-1][j-1]这个位置的时候的个数。所以有如下状态转移方程：<br>$$<br>dp[i][j] =<br>        \begin{cases}<br>        dp[i][j-1],  &amp; \text{if t[i-1] != s[j-1]} \\<br>        dp[i][j-1]+dp[i-1][j-1], &amp; \text{if t[i-1] = s[j-1]}<br>        \end{cases}<br>$$</p>
-<h3 id="定义初始状态和终止状态"><a href="#定义初始状态和终止状态" class="headerlink" title="定义初始状态和终止状态"></a>定义初始状态和终止状态</h3><p>对于dp[0][0]，有个空串，所以是1<br>对于dp[0][1-m]，至少有个空串，所以是1<br>对于dp[1-n][0]，t至少有一个字符，但是s没有字符，所以是0<br>应该返回的是dp[n][m]</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">distinctSubseq</span><span class="params">(<span class="built_in">string</span>&amp; s,<span class="built_in">string</span>&amp; t)</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> n = t.size();</div><div class="line">	<span class="keyword">int</span> m = s.size();</div><div class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m+<span class="number">1</span>));</div><div class="line">	dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=n;++i)&#123;</div><div class="line">		dp[i][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=m;++i)&#123;</div><div class="line">		dp[<span class="number">0</span>][i] = <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=n;++i)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=m;++j)&#123;</div><div class="line">			dp[i][j] = dp[i][j<span class="number">-1</span>]+(t[i<span class="number">-1</span>] == s[j<span class="number">-1</span>]?dp[i<span class="number">-1</span>][j<span class="number">-1</span>]:<span class="number">0</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dp[n][m];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -388,9 +391,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/Caffe/" rel="tag"># Caffe</a>
           
-            <a href="/tags/动态规划/" rel="tag"># 动态规划</a>
+            <a href="/tags/深度学习，C/" rel="tag"># 深度学习，C++</a>
           
         </div>
       
@@ -403,8 +406,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/21/DP_cardGame/" rel="next" title="动态规划:纸牌博弈">
-                <i class="fa fa-chevron-left"></i> 动态规划:纸牌博弈
+              <a href="/2017/05/21/DP_Distinct_Subsequence/" rel="next" title="动态规划:不同子序列（Distinct Subsequences）">
+                <i class="fa fa-chevron-left"></i> 动态规划:不同子序列（Distinct Subsequences）
               </a>
             
           </div>
@@ -413,8 +416,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/21/caffe_sourcecode_blob/" rel="prev" title="Caffe源码阅读之Blob">
-                Caffe源码阅读之Blob <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/08/From_Lenet_5_to_Mask_RCNN/" rel="prev" title="从LeNet-5到Mask R-CNN之LeNet到Resnet">
+                从LeNet-5到Mask R-CNN之LeNet到Resnet <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -544,7 +547,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题"><span class="nav-number">2.</span> <span class="nav-text">解题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">2.1.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先定义状态（即定义动态规划的状态存储数组dp）"><span class="nav-number">2.1.1.</span> <span class="nav-text">首先定义状态（即定义动态规划的状态存储数组dp）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其次定义状态转移方程"><span class="nav-number">2.1.2.</span> <span class="nav-text">其次定义状态转移方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义初始状态和终止状态"><span class="nav-number">2.1.3.</span> <span class="nav-text">定义初始状态和终止状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">2.1.4.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最前面"><span class="nav-number">2.</span> <span class="nav-text">写在最前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blob-hpp"><span class="nav-number">3.</span> <span class="nav-text">Blob.hpp</span></a></li></ol></div>
             
 
           </div>

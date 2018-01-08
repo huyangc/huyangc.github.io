@@ -1,0 +1,766 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="机器学习,深度学习,神经网络,分类,检测,分割," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="转载请注明出处：blog.justkitt.com本系列文章会从最基本的神经网络结构开始讲起，之后会进一步介绍基础神经网络在检测、分割、识别等任务上的耦合方式。本系列文章尽量每周更新三次。 这篇文章主要为Lenet-5到Resnet">
+<meta name="keywords" content="机器学习,深度学习,神经网络,分类,检测,分割">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从LeNet-5到Mask R-CNN之LeNet到Resnet">
+<meta property="og:url" content="http://blog.justkitt.com/2018/01/08/From_Lenet_5_to_Mask_RCNN/index.html">
+<meta property="og:site_name" content="JustKitt&#39;s blog">
+<meta property="og:description" content="转载请注明出处：blog.justkitt.com本系列文章会从最基本的神经网络结构开始讲起，之后会进一步介绍基础神经网络在检测、分割、识别等任务上的耦合方式。本系列文章尽量每周更新三次。 这篇文章主要为Lenet-5到Resnet">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/lenet-5.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/alexnet.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/alexnet_detail.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/lrn.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/lrn_image.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/relu_result.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/vgg_detail.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/inception.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/inception_detail.png">
+<meta property="og:image" content="http://obbyqbbco.bkt.clouddn.com/resnet_shortcut.png">
+<meta property="og:updated_time" content="2018-01-08T15:01:41.785Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从LeNet-5到Mask R-CNN之LeNet到Resnet">
+<meta name="twitter:description" content="转载请注明出处：blog.justkitt.com本系列文章会从最基本的神经网络结构开始讲起，之后会进一步介绍基础神经网络在检测、分割、识别等任务上的耦合方式。本系列文章尽量每周更新三次。 这篇文章主要为Lenet-5到Resnet">
+<meta name="twitter:image" content="http://obbyqbbco.bkt.clouddn.com/lenet-5.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.justkitt.com/2018/01/08/From_Lenet_5_to_Mask_RCNN/"/>
+
+
+
+
+
+  <title>从LeNet-5到Mask R-CNN之LeNet到Resnet | JustKitt's blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JustKitt's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.justkitt.com/2018/01/08/From_Lenet_5_to_Mask_RCNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JustKitt">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JustKitt's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从LeNet-5到Mask R-CNN之LeNet到Resnet</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-08T22:16:17+08:00">
+                2018-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script type="text/javascript" src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<p><strong>转载请注明出处</strong>：<a href="http://blog.justkitt.com">blog.justkitt.com</a><br>本系列文章会从最基本的神经网络结构开始讲起，之后会进一步介绍基础神经网络在检测、分割、识别等任务上的耦合方式。本系列文章尽量每周更新三次。</p>
+<p><strong>这篇文章主要为Lenet-5到Resnet</strong><br><a id="more"></a></p>
+<h1 id="LeNet-5"><a href="#LeNet-5" class="headerlink" title="LeNet-5"></a>LeNet-5</h1><p>LeCun 等人提出的一种名为“LeNet-5”网络结构并将其用在手写数字识别上，该结构受Hubel 等人在猫视觉皮层的研究中所发现的一种具有局部敏感和方向选择功能的具有“感受野”的神经元所启发，具体结构如下图，卷积神经网络随之诞生。<br><img src="http://obbyqbbco.bkt.clouddn.com/lenet-5.png" alt="Lenet-5"></p>
+<p>LeNet-5是一个只有三个卷积层的卷积神经网络，分别为5x5x6，5x5x16，5x5x120，中间有一些pooling层，之后接一个全连接层然后输出。</p>
+<h1 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h1><p>Alex Krizhevsky 等人在ILSVRC-2010 中提出的一种针对1000 种类别分类的模型，重新把神经网络带入大众的视野。该结构在测试数据上达到top-1 错误率和top-5 错误率分别为37.5% 和17%，极大程度上提高了当时的最佳成绩。这个卷积神经网络有大约6 千万个参数和65 万个神经元，有五个卷积层和三个全连接层，其中全连接层的最后一层为1000 分类的softmax 层。某些卷积层后面跟随有最大池化层。为了降低全连接层中出现过拟合的可能性，增加了一种称为“dropout”的方法，在实验中被证实是非常有效的。AlexNet 网络结构如下图所示，各网络层参在后续的表格中给出，其中conv 表示卷积层，fc 表示全连接层。<br><img src="http://obbyqbbco.bkt.clouddn.com/alexnet.png" alt="Alexnet"><br><img src="http://obbyqbbco.bkt.clouddn.com/alexnet_detail.png" alt="Alexnet_Details"><br>AlexNet 相对于传统卷积神经网络所做的优化主要有：</p>
+<h2 id="1-局部响应归一化（LRN）"><a href="#1-局部响应归一化（LRN）" class="headerlink" title="1. 局部响应归一化（LRN）"></a>1. 局部响应归一化（LRN）</h2><p>该操作的目的在于对局部神经元的响应创立竞争机制，增大较大的响应值，减小细微的响应值，主要为了抑制微小的神经元响应值，模拟哺乳动物视觉系统中的侧抑制现象，提高系统抗噪声能力。<br><img src="http://obbyqbbco.bkt.clouddn.com/lrn.png" alt="LRN_function"><br><img src="http://obbyqbbco.bkt.clouddn.com/lrn_image.png" alt="LRN_shown"></p>
+<h2 id="2-数据集扩充方式"><a href="#2-数据集扩充方式" class="headerlink" title="2. 数据集扩充方式"></a>2. 数据集扩充方式</h2><p>AlexNet在ImageNet数据集上进行训练的时候，首先将训练图片缩放成256x256，然后再将缩放后的图片crop四个角和中间点成224x224，再之后将crop的图像进行翻转保证水平不变性。</p>
+<h2 id="3-ReLU"><a href="#3-ReLU" class="headerlink" title="3. ReLU"></a>3. ReLU</h2><p>在Nair和Hinton之后，将ReLU非线性激活函数引入卷积神经网络中，加快了神经网络的收敛速度。<br><img src="http://obbyqbbco.bkt.clouddn.com/relu_result.png" alt="relu_result"></p>
+<h1 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h1><p>Karen Simonyan(VGG 团队) 研究了卷积网络的深度在大规模图像识别背景下的对准确率的影响。主要通过利用比较小的卷积核（3x3）的堆叠增加模型的深度，在增加模型深度的同时，增加了多个ReLU 函数的作用，增加了整个结构的非线性性，进而增加了决策函数的判别性。利用这种小卷积核的设计，效果相比之前的设计有了显著的提高。<br>两个3x3的卷积核在接收域基础上等价于5x5，但是中间会有ReLU引入的非线性性，拟合效果会更好。<br>VGG 团队从网络深度来改进卷积神经网络模型，通过固定网络结构的其他参数，平稳增加网络深度，同时更改所有卷积层的卷积核大小，使得在增加网络层数的同时，整个模型的需要训练的参数数量相对来说没有增加或增加程度在可接受范围内。具体的网络结构见表。<br><img src="http://obbyqbbco.bkt.clouddn.com/vgg_detail.png" alt="vgg_detail"></p>
+<p>VGGNet 相对于传统卷积神经网络所做的优化主要有：</p>
+<h2 id="多尺寸图像训练模式"><a href="#多尺寸图像训练模式" class="headerlink" title="多尺寸图像训练模式"></a>多尺寸图像训练模式</h2><p>VGG 团队的训练图片大小设置如下：S 表示训练图片的最小边，之后根据这个最小边的不同选择，可以将训练方式分为：单一尺寸训练和多尺寸训练。在单一尺寸训练模式下，VGG 将S 设置为256 和384 两种。根据这两种S 的设置训练两个模型，其中S=384 的网络结构使用S=256 的网络结构的参数进行初始化。即每次都会把训练图片的大小固定到短边是256 或384 之后用crop 的方式把训练图片变成224x224 的大小。在多尺寸训练模式下，每次数据输入时，将S 随机在一个范围[Smin; Smax] 中选取，VGG 实验中，Smin = 256; Smax = 512。由于物体在图片中可能呈现出不同的大小，所以使用这样的方式能够从某种程度上获益。</p>
+<h2 id="多尺寸图像测试模式"><a href="#多尺寸图像测试模式" class="headerlink" title="多尺寸图像测试模式"></a>多尺寸图像测试模式</h2><p>在测试时，将测试图片的最短边长记为Q，之后在测试的时候，将第一层全连接层替换成7x7 的卷积层，最后两层全连接层替换成1x1 的卷积层。这样在测试的时候，整个网络结构是一个全部由卷积层构成的网络，网络的输出是一个根据图片输入大小得到的不同空间分辨率以及类别种类所决定的通道数。最后为了得到图片对于每个类别的评分，使用sum-pooled 的方式，将一个三维矩阵转化为一个分数向量。</p>
+<h1 id="GoogLeNet（Inception-v1）"><a href="#GoogLeNet（Inception-v1）" class="headerlink" title="GoogLeNet（Inception-v1）"></a>GoogLeNet（Inception-v1）</h1><p>Szegedy 等人（下称GoogLeNet 团队）引入了一种名为Inception 的结构，利用这种结构，能够在增加卷积神经网络深度和宽度的同时，充分利用计算资源，使得模型训练难度不会增加太多。他们在ILSVTC-2014 上提交的GoogLeNet 模型，是一个22 层的深度网络，被用在分类和检测任务中，并且在两个任务上都取得了最先进的水平。在GoogLeNet 中，1x1 卷积层被大量使用，主要出于减少计算量，移除计算瓶颈的目的去使用这样的结构，所以在不影响整体网络性能的情况下，使用1x1 的卷积层可以使的网络深度和宽度都有一定程度上的增加。GoogLeNet 的结构如图4所示，蓝色节点表示卷积层，红色节点表示池化层，橙色部分为softmax层，绿色部分为局部归一化层以及串联层等。<br>作者认为提高深度神经网络的最直接的方式就是不然增加层数，不然增加每一层的神经元数量，但是这样的增加方式会引入大量的参数，同时由于当时Batch Normalization还没有被提出，所以当时过深的网络还会受到梯度消失和梯度爆炸的困扰。作者设计出一种叫做Inception的结构来实现其想法。Inception结构如图所示。<br><img src="http://obbyqbbco.bkt.clouddn.com/inception.png" alt="Inception_structure"><br>图的左边是一个最naïve的版本，这个版本直接用3x3和5x5的卷积层接上一层的输出。这样的结构计算量会很大，例如假设上一层的通道数是N，3x3卷积层的输出通道数是M，那么3x3卷积的参数个数就是Nx3x3xM，多堆叠几个这样的结构就很容易达到很大的计算量。这时候1x1卷积出现了，这个卷积是至今为止见过的最好用的卷积，它从本质上来说，就是在通道数上做了个全连接，不改变feature map的大小。同样地，我们假设前一层输出的通道数是N，3x3卷积层的通道数是M，1x1卷积层的通道数应该会小于M，那么总体的参数数量就是：Nx1x1xK+Kx3x3xM。这个参数会比直接接上3x3的卷积层参数少。对于5x5也一样。所以就有了右边那种叫做维度减少的Inception模块。还可以优化的地方就是在3x3卷积层的输出后面接上1x1的卷积，这样也会减少总体的参数数量。<br>同时，Filter Concatenation结构就是在Feature Map上将Inception模块中不同大小的卷积核输出的Feature Map进行空间上的拼接，这样在这一层输出的特征图（可以理解为特征）中，既有比较大的接收域所产生的特征，也有比较小的接收域所产生的特征。<br>Inception结构上来看也是稀疏的，因为输入相同，但是可以在不同的机器上完成卷积的计算，因为是并行的完全没有关联，然后只需要再将卷积后的结果拼接在一起即可。<br>GoogLeNet的结构具体如表所示。<br><img src="http://obbyqbbco.bkt.clouddn.com/inception_detail.png" alt="GoogLeNet_Detail"><br>表中的#3x3reduce表示的是在3x3卷积层前连接的1x1的卷积层的Feature Map的数量。即之前内容中K的数量。<br>从表中可以看出，GoogLeNet的全连接层只有一层，大部分都是Inception结构，然后再最后的时候构造出一个近似于分类个数的Feature Map数量，在这个Feature Map上做Avg Pool，得到一个向量，用这个向量后面接一个全连接层，全连接层后面接softmax做分类。全连接层的减少也会对计算的速度有提升。<br>在分类层前面用avg pool是遵循了network in network这篇文章的思想，但是在之后再加了一个全连接层是为了让自己的模型在其他数据标签上更容易finetuned。同时倒数第二层的avg pool让准确率提高了0.6个点，值得注意的是，在avg pool后面还是接了dropout。<br>同时，因为从经验上来说，中间卷积层应该更具有区分度，所以作者在训练的时候在中间接入了两个分类层，用这些层计算loss，loss的权重贡献率是0.3。 <em>在rethinking inception这篇文章中，作者给出即使不在中间层接出loss层，对最终的结果几乎没有什么影响。</em></p>
+<h1 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h1><p>ResNet 是He 等人基于深度残差学习框架所提出的解决系统精度在饱和后，随着网络深度的增加而迅速下滑的问题。原网络受VGGNet 启发，主要采用3x3卷积核，遵循两个设计原则：1) 对于相同输出特征图尺寸，卷积层有相同个数的卷积核；2) 如果特征图尺寸缩小一半，卷积核个数加倍以保持每个层的计算复杂度。同时，通过步长为2 的卷积来进行减采样。残差学习的一个构建单元如图5所示，假设期望的网络层关系映射为H(x)，让堆叠的非线性网络层拟合另一个映射F(x):=H(x)-x，所以原先的映射为F(x)+x。<br><img src="http://obbyqbbco.bkt.clouddn.com/resnet_shortcut.png" alt="Resnet_shortcut"><br>ResNet相对于传统卷积神经网络所做的优化主要有：</p>
+<h2 id="1-Batch-Normalization"><a href="#1-Batch-Normalization" class="headerlink" title="1. Batch Normalization"></a>1. Batch Normalization</h2><p>Batch Normalization就是</p>
+<ul>
+<li>训练的时候根据当前数据的均值和方差，将输出减去均值，然后除以方差，将其进行归一化。并用一个全局变量来记录训练到当前情况时的均值和方差情况（用滑动平均记录）</li>
+<li>预测的时候用训练时候记录的全局的均值和方差进行计算</li>
+</ul>
+<p>通过Batch Normalization，就可以很好地进行梯度消失现象的避免，让输出归一化到一个范围以内，更好地进行训练。</p>
+<h2 id="2-Short-Cut-Connection"><a href="#2-Short-Cut-Connection" class="headerlink" title="2. Short Cut Connection"></a>2. Short Cut Connection</h2><p>就是Resnet中的跳转连接，通过这个跳转连接，能够让反向传播的梯度在往前传回到很前面的层的时候，不发生消失的情况。跳转连接的出现，也让Resnet其实不太像是一个很深的结构，而像是几个比较浅的结构的并行（这个结论需要进一步阅读dualpath-net之后再进一步给出）</p>
+<h1 id="…To-Be-Continued"><a href="#…To-Be-Continued" class="headerlink" title="…To Be Continued"></a>…To Be Continued</h1><p>接下来会介绍Inception-v2、v3、v4、Inception-Resnet-v1、Inception-Resnet-v2、DenseNet、Dualpath-Net、SqueezeNet、ShuffleNet、Xception等基础网络结构，再之后，会介绍一些常见的检测算法以及基础结构与检测算法的合并。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
+          
+            <a href="/tags/分类/" rel="tag"># 分类</a>
+          
+            <a href="/tags/检测/" rel="tag"># 检测</a>
+          
+            <a href="/tags/分割/" rel="tag"># 分割</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/caffe_sourcecode_blob/" rel="next" title="Caffe源码阅读之Blob">
+                <i class="fa fa-chevron-left"></i> Caffe源码阅读之Blob
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JustKitt" />
+          <p class="site-author-name" itemprop="name">JustKitt</p>
+           
+              <p class="site-description motion-element" itemprop="description">JustKitt的个人博客，记录问题解决方法的地方</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LeNet-5"><span class="nav-number">1.</span> <span class="nav-text">LeNet-5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AlexNet"><span class="nav-number">2.</span> <span class="nav-text">AlexNet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-局部响应归一化（LRN）"><span class="nav-number">2.1.</span> <span class="nav-text">1. 局部响应归一化（LRN）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-数据集扩充方式"><span class="nav-number">2.2.</span> <span class="nav-text">2. 数据集扩充方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-ReLU"><span class="nav-number">2.3.</span> <span class="nav-text">3. ReLU</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VGGNet"><span class="nav-number">3.</span> <span class="nav-text">VGGNet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多尺寸图像训练模式"><span class="nav-number">3.1.</span> <span class="nav-text">多尺寸图像训练模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多尺寸图像测试模式"><span class="nav-number">3.2.</span> <span class="nav-text">多尺寸图像测试模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GoogLeNet（Inception-v1）"><span class="nav-number">4.</span> <span class="nav-text">GoogLeNet（Inception-v1）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ResNet"><span class="nav-number">5.</span> <span class="nav-text">ResNet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Batch-Normalization"><span class="nav-number">5.1.</span> <span class="nav-text">1. Batch Normalization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Short-Cut-Connection"><span class="nav-number">5.2.</span> <span class="nav-text">2. Short Cut Connection</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#…To-Be-Continued"><span class="nav-number">6.</span> <span class="nav-text">…To Be Continued</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JustKitt</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
